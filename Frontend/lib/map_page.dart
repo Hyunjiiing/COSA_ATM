@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:cosa_atm/bottom_bar.dart';
+import 'package:cosa_atm/camera_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:camera/camera.dart';
+
 
 class map_page extends StatefulWidget {
   const map_page({Key? key}) : super(key: key);
@@ -15,6 +18,7 @@ class map_page extends StatefulWidget {
 
 double current_latitude =0;
 double current_longitude =0;
+
 
 List<Marker> _markers = [
   Marker(markerId: MarkerId("맨홀1"),draggable: true,position: LatLng(36.6305, 127.4578),infoWindow: InfoWindow(title: "1234")),
@@ -210,7 +214,11 @@ class _map_pageState extends State<map_page> {
           ),
           child: Icon(Icons.camera_alt,color: Colors.black,),
         ),
-        onPressed: (){},
+        onPressed: () async {
+          final cameras = await availableCameras();
+          final firstCamera = cameras.first;
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>camera_page(camera: firstCamera,)));
+        },
       ),
     );
   }

@@ -1,8 +1,13 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.cosa_atm">
     <application
         android:label="cosa_atm"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false"/>
 
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAWhcvRB1RnAs_sOkj0a1qkVYDbQzG6c2Q"/>

@@ -67,6 +67,7 @@ flutter:
     - images/img1.png
     - images/img3.png
     - images/pin.png
+    - images/crown.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

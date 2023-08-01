@@ -199,6 +199,152 @@ class _map_pageState extends State<map_page> {
             alignment: Alignment.bottomRight,
             child: MaterialButton(
               child: Container(
+                margin: EdgeInsets.only(bottom: 60,right: 10),
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Center(child: Image.asset("images/crown.png",width: 40,))
+              ),
+              onPressed: (){
+                showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        actionsPadding: EdgeInsets.zero,
+                        contentPadding: EdgeInsets.zero,
+                        content: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height/100*70,
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: MaterialButton(
+                                  padding: EdgeInsets.zero,
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.grey
+                                    ),
+                                    child: Icon(Icons.close),
+                                  ),
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  }
+                                ),
+                              ),
+                              Align(alignment: Alignment.topCenter,child: Text("Rankings",style: TextStyle(fontSize: 40),),),
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text("순위",style: TextStyle(color: Colors.grey,fontSize: 16),),
+                                    Text("닉네임",style: TextStyle(color: Colors.grey,fontSize: 16),),
+                                    Text("점수",style: TextStyle(color: Colors.grey,fontSize: 16),),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width/100*60,
+                                      height: MediaQuery.of(context).size.height/100*30,
+                                      child: ListView.builder(
+                                          itemCount: 5,
+                                          itemBuilder: (BuildContext context,int index){
+                                            return index%2==0 ?
+                                            Container(
+                                              height: MediaQuery.of(context).size.height/100*6,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  color: Colors.grey[300]
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Text("${index+1}",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20)),
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.cruelty_free),
+                                                      Text("닉네임"),
+                                                    ],
+                                                  ),
+                                                  Text("점수")
+                                                ],
+                                              ),
+                                            )
+                                                :
+                                            Container(
+                                              height: MediaQuery.of(context).size.height/100*6,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  color: Colors.white
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  Text("${index+1}",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20)),
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.cruelty_free),
+                                                      Text("닉네임"),
+                                                    ],
+                                                  ),
+                                                  Text("점수")
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                      ),
+                                    ),
+                                    Icon(Icons.more_vert,size: 100,color: Colors.grey[300],),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width/100*60,
+                                      height: MediaQuery.of(context).size.height/100*6,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.grey[300]
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text("75",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20),),
+                                          Row(
+                                            children: [
+                                              Icon(Icons.cruelty_free),
+                                              Text("닉네임"),
+                                            ],
+                                          ),
+                                          Text("점수")
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                );
+              },
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: MaterialButton(
+              child: Container(
                 width: 80,
                 height: 30,
                 decoration: BoxDecoration(

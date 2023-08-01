@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:cosa_atm/map_page.dart';
 import 'package:flutter/material.dart';
 
 // A screen that allows users to take a picture using a given camera.
@@ -139,7 +140,61 @@ class DisplayPictureScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Display the Picture')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      body: Column(
+        children: [
+          Container(
+              width: MediaQuery.of(context).size.width/100*90,
+              height: MediaQuery.of(context).size.height/100*70,
+              child: Image.file(File(imagePath),fit: BoxFit.contain,)
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MaterialButton(
+                child: Container(
+                  width: MediaQuery.of(context).size.width/100*40,
+                  height: MediaQuery.of(context).size.height/100*8,
+                  child: Center(child: Text("다시 찍기")),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+                  onPressed: () async {
+                    final cameras = await availableCameras();
+                    final firstCamera = cameras.first;
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => camera_page(
+                          camera: firstCamera,
+                        ),
+                      ),
+                    );
+                  },
+              ),
+              MaterialButton(
+                child: Container(
+                  width: MediaQuery.of(context).size.width/100*40,
+                  height: MediaQuery.of(context).size.height/100*8,
+                  child: Center(child: Text("확인")),
+                  decoration: BoxDecoration(
+                      color: Colors.blueAccent.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+                onPressed: (){
+                  add_marker("사진 이름");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => map_page(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

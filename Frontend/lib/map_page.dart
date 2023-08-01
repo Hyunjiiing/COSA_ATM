@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/camera_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:camera/camera.dart';
@@ -18,13 +21,17 @@ class map_page extends StatefulWidget {
 
 double current_latitude =0;
 double current_longitude =0;
-
+late Uint8List markerIcon;
 
 List<Marker> _markers = [
-  Marker(markerId: MarkerId("맨홀1"),draggable: true,position: LatLng(36.6305, 127.4578),infoWindow: InfoWindow(title: "1234")),
-  Marker(markerId: MarkerId("전봇대1"),draggable: true,position: LatLng(36.6299, 127.4590),infoWindow: InfoWindow(title: "5678"))
+  Marker(markerId: MarkerId("맨홀1"),draggable: true,position: LatLng(36.6305, 127.4578),infoWindow: InfoWindow(title: "1234"),icon: BitmapDescriptor.fromBytes(markerIcon)),
+  Marker(markerId: MarkerId("전봇대1"),draggable: true,position: LatLng(36.6299, 127.4590),infoWindow: InfoWindow(title: "5678"),icon: BitmapDescriptor.fromBytes(markerIcon))
 
 ];
+
+Future<void> add_marker(String a)async {
+  _markers.add(Marker(markerId: MarkerId(a),draggable: true,position: LatLng(current_latitude,current_longitude),infoWindow: InfoWindow(title: a),icon: BitmapDescriptor.fromBytes(markerIcon)));
+}
 
 Future<void> _getPosition() async{
   LocationPermission permission = await Geolocator.requestPermission();
@@ -34,16 +41,26 @@ Future<void> _getPosition() async{
   current_longitude = position.longitude;
 }
 
+void setCustomMapPin() async {
+  markerIcon = await getBytesFromAsset('images/pin.png', 130);
+}
+
+Future<Uint8List> getBytesFromAsset(String path, int width) async {
+  ByteData data = await rootBundle.load(path);
+  ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+      targetWidth: width);
+  ui.FrameInfo fi = await codec.getNextFrame();
+  return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+      .buffer
+      .asUint8List();
+}
+
 class _map_pageState extends State<map_page> {
   Completer<GoogleMapController> _controller = Completer();
 
-  static final CameraPosition My_location = CameraPosition(
-    target: LatLng(current_latitude, current_longitude),
-    zoom: 15,
-  );
-
   @override
   void initState() {
+    setCustomMapPin();
     // TODO: implement initState
     _getPosition();
   }
@@ -59,7 +76,7 @@ class _map_pageState extends State<map_page> {
             myLocationEnabled: true,
             markers: Set.from(_markers),
             initialCameraPosition: CameraPosition(
-                target: LatLng(current_latitude,current_longitude)
+                target: LatLng(current_latitude,current_longitude),
             ),
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
@@ -199,7 +216,7 @@ class _map_pageState extends State<map_page> {
               ),
               onPressed: (_goToTheMyLocation),
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: bottom_bar(),
@@ -215,6 +232,7 @@ class _map_pageState extends State<map_page> {
           child: Icon(Icons.camera_alt,color: Colors.black,),
         ),
         onPressed: () async {
+          _getPosition();
           final cameras = await availableCameras();
           final firstCamera = cameras.first;
           Navigator.push(context, MaterialPageRoute(builder: (context)=>camera_page(camera: firstCamera,)));

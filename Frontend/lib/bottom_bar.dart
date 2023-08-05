@@ -1,4 +1,5 @@
 import 'package:cosa_atm/map_page.dart';
+import 'package:cosa_atm/shop_page.dart';
 import 'package:flutter/material.dart';
 
 class bottom_bar extends StatefulWidget {
@@ -53,12 +54,12 @@ class _bottom_barState extends State<bottom_bar> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.home,
-                                  color: currentTap==0 ? Colors.white : Colors.grey,
+                                  Icons.map_outlined,
+                                  color: currentTap==0 ? Colors.black : Colors.grey,
                                 ),
                                 Text(
-                                  '홈',
-                                  style: TextStyle(color: currentTap==0 ? Colors.white : Colors.grey),
+                                  '지도',
+                                  style: TextStyle(color: currentTap==0 ? Colors.black : Colors.grey),
                                 )
                               ],
                             ),
@@ -90,12 +91,12 @@ class _bottom_barState extends State<bottom_bar> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.shopping_cart_outlined,
-                              color: currentTap==1 ? Colors.white : Colors.grey,
+                              Icons.pets_outlined,
+                              color: currentTap==1 ? Colors.black : Colors.grey,
                             ),
                             Text(
-                              '쇼핑',
-                              style: TextStyle(color: currentTap==1 ? Colors.white : Colors.grey),
+                              '펫',
+                              style: TextStyle(color: currentTap==1 ? Colors.black : Colors.grey),
                             ),
                           ],
                         ),
@@ -113,7 +114,7 @@ class _bottom_barState extends State<bottom_bar> {
                           currentTap=2;
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context)=>map_page())
+                              MaterialPageRoute(builder: (context)=>shop_page())
                           );
                         });
                       },
@@ -129,12 +130,12 @@ class _bottom_barState extends State<bottom_bar> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.house_outlined,
-                              color: currentTap==2 ? Colors.white : Colors.grey,
+                              Icons.shopping_bag_outlined,
+                              color: currentTap==2 ? Colors.black : Colors.grey,
                             ),
                             Text(
-                              '집',
-                              style: TextStyle(color: currentTap==2 ? Colors.white : Colors.grey),
+                              '상점',
+                              style: TextStyle(color: currentTap==2 ? Colors.black : Colors.grey),
                             ),
                           ],
                         ),
@@ -168,11 +169,11 @@ class _bottom_barState extends State<bottom_bar> {
                               children: [
                                 Icon(
                                   Icons.settings,
-                                  color: currentTap==3 ? Colors.white : Colors.grey,
+                                  color: currentTap==3 ? Colors.black : Colors.grey,
                                 ),
                                 Text(
                                   '설정',
-                                  style: TextStyle(color: currentTap==3 ? Colors.white : Colors.grey),
+                                  style: TextStyle(color: currentTap==3 ? Colors.black : Colors.grey),
                                 )
                               ],
                             ),

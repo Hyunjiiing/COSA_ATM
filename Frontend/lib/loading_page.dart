@@ -27,7 +27,7 @@ class _loading_pageState extends State<loading_page> {
   void initState(){
     _getPosition();
     setCustomMapPin();
-    Timer(Duration(milliseconds: 1500), () {
+    Timer(Duration(milliseconds: 2000), () {
       Navigator.push(context, MaterialPageRoute(
           builder: (context) => map_page()
       )

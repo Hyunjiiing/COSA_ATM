@@ -60,9 +60,7 @@ class _map_pageState extends State<map_page> {
 
   @override
   void initState() {
-    setCustomMapPin();
-    // TODO: implement initState
-    _getPosition();
+
   }
 
   @override

@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_maps_flutter: 2.2.6
   geolocator: ^9.0.2
+  firebase_core: ^2.15.0
+  get: ^4.6.5
+  firebase_auth: ^4.7.2
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +66,7 @@ flutter:
     - images/img.png
     - images/img1.png
     - images/img3.png
+    - assets/images/ATM_logo.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

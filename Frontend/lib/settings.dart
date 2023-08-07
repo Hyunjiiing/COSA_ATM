@@ -141,14 +141,16 @@ class SettingsPage extends StatelessWidget {
                         letterSpacing: -1.0,
                       ),
                     ),
-                    trailing: Switch(
-                      value: true,
-                      onChanged: (value) {
-                        // 스위치 버튼의 상태 변경에 대한 로직을 구현
-                      },
-                      activeTrackColor: Color(0xFFFFCD4A),
-                      activeColor: Color(0xFFFFCD4A),
-                      inactiveThumbColor: Colors.grey,
+                    trailing: Transform.scale(
+                      scale: 0.8, // 원하는 크기 비율로 조절 (1.0이 기본 크기)
+                      child: CupertinoSwitch(
+                        value: true,
+                        onChanged: (value) {
+                          // 스위치 버튼의 상태 변경에 대한 로직
+                        },
+                        activeColor: Color(0xFFFFCD4A),
+                        trackColor: Colors.grey,
+                      ),
                     ),
                   ),
                 ],
@@ -183,7 +185,16 @@ class SettingsPage extends StatelessWidget {
                         letterSpacing: -1.0,
                       ),
                     ),
-                    trailing: Icon(Icons.chevron_right),
+                    trailing:  Text(
+                      '0.0.0',
+                      style: TextStyle(
+                        color: Colors.grey[350],
+                        fontSize: 15,
+                        fontFamily: 'Noto Sans KR',
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: -0.3,
+                      ),
+                    ),
                   ),
                   Divider(),
                   ListTile(
@@ -210,7 +221,7 @@ class SettingsPage extends StatelessWidget {
                     Text(
                       'Team COSA',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey[350],
                         fontSize: 12,
                         fontFamily: 'Noto Sans KR',
                         fontWeight: FontWeight.w500,
@@ -221,7 +232,7 @@ class SettingsPage extends StatelessWidget {
                     Text(
                       'K-HACATHON 11',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey[350],
                         fontSize: 12,
                         fontFamily: 'Noto Sans KR',
                         fontWeight: FontWeight.w500,

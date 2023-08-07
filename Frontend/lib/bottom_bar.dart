@@ -53,9 +53,13 @@ class _bottom_barState extends State<bottom_bar> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.map_outlined,
-                                  color: currentTap==0 ? Colors.black : Colors.grey,
+                                Container(
+                                  width:30,
+                                  height: 30,
+                                  child: Image.asset(
+                                    "images/map.png",
+                                    color: currentTap==0 ? Colors.black : Colors.grey,
+                                  ),
                                 ),
                                 Text(
                                   '지도',
@@ -90,9 +94,14 @@ class _bottom_barState extends State<bottom_bar> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.pets_outlined,
-                              color: currentTap==1 ? Colors.black : Colors.grey,
+                            Container(
+                              width: 30,
+                              height: 30,
+                              child: Image.asset(
+                                "images/petprint.png",
+                                color: currentTap==1 ? Colors.black : Colors.grey,
+
+                              ),
                             ),
                             Text(
                               '펫',

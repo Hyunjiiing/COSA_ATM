@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -205,7 +204,8 @@ class SettingsPage extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
               Center(
-                child: Column(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
                       'Team COSA',

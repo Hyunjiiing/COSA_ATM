@@ -47,6 +47,26 @@ class _InventoryScreenState extends State<InventoryScreen> {
     2,
   ];
 
+  final List<String> catNames = [
+    '냥냥이',
+    '치즈냥이',
+    '도둑냥이',
+    '반반이',
+    '오드냥이',
+    '양말냥이',
+    '수제비'
+  ];
+
+  final List<String> catImagePaths = [
+    'images/character1.png',
+    'images/character2.png',
+    'images/character3.png',
+    'images/character4.png',
+    'images/character5.png',
+    'images/character6.png',
+    'images/character7.png',
+  ];
+
   int currentTap=0;
 
   @override
@@ -57,7 +77,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding: const EdgeInsets.all(50.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -70,16 +90,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 17),
                   Container(
-                    child: Image.asset(
-                      'images/cat1.png',
+                    child: Image(
+                      image: AssetImage('images/inven_cat.gif'),
                       width: 200,
                       height: 200,
                     ),
                   ),
                   Text(
-                    '반반이',
+                    '냥냥이',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 21,
@@ -94,7 +113,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       fontWeight: FontWeight.w200,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 17),
                   Padding(
                     padding: EdgeInsets.only(left: 5.6),
                     child: Row(
@@ -170,192 +189,227 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: showItems
-                            ? GridView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 6.0,
-                            mainAxisSpacing: 6.0,
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                color: Colors.grey[200],
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 8),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 8),
-                                      child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[350],
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        child: Image.asset(
-                                          'images/item1.png',
-                                          width: 100,
-                                          height: 100,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      itemNames[index],
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    SizedBox(height: 15),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(width: 8),
-                                        Container(
-                                          padding: EdgeInsets.all(4),
+                          child: showItems
+                              ? GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 6.0,
+                              mainAxisSpacing: 6.0,
+                            ),
+                            itemCount: 5,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  color: Colors.grey[200],
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 8),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8),
+                                        child: Container(
+                                          padding: EdgeInsets.all(8),
                                           decoration: BoxDecoration(
                                             color: Colors.grey[350],
                                             borderRadius: BorderRadius.circular(8),
                                           ),
-                                          child: Text(
-                                            ' ${itemCount[index]} 개',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w200,
-                                            ),
+                                          child: Image.asset(
+                                            'images/item1.png',
+                                            width: 20,
+                                            height: 20,
                                           ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 8),
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title: Text('아이템 사용하기'),
-                                                    content: Text('${itemNames[index]}을(를) 사용합니다.'),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                        child: Text(
-                                                          '취소',
-                                                          style: TextStyle(
-                                                            color: Color(0xFFFFCD4A),
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 8),
-                                                      ElevatedButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                        style: ElevatedButton.styleFrom(
-                                                          backgroundColor: Color(0xFFFFCD4A),
-                                                          shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(8),
-                                                          ),
-                                                          padding: EdgeInsets.symmetric(
-                                                            horizontal: 12,
-                                                            vertical: 8,
-                                                          ),
-                                                        ),
-                                                        child: Text(
-                                                          '사용하기',
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Color(0xFFFFCD4A),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 12,
-                                                vertical: 8,
-                                              ),
-                                            ),
-                                            child: Text(
-                                              '사용하기',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                            : GridView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 6.0,
-                            mainAxisSpacing: 6.0,
-                          ),
-                          itemCount: 20,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                color: Colors.grey[200],
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 8),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 8),
-                                      child: Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[350],
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        child: Image.asset(
-                                          'images/character1.png',
-                                          width: 100,
-                                          height: 100,
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(height: 8),
-                                  ],
+                                      SizedBox(height: 8),
+                                      Text(
+                                        itemNames[index],
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(width: 8),
+                                          Container(
+                                            padding: EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[350],
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              ' ${itemCount[index]} 개',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w200,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 8),
+                                          Padding(
+                                            padding: EdgeInsets.only(right: 8),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: Text('아이템 사용하기'),
+                                                      content: Text('${itemNames[index]}을(를) 사용합니다.'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                          child: Text(
+                                                            '취소',
+                                                            style: TextStyle(
+                                                              color: Color(0xFFFFCD4A),
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 8),
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                            backgroundColor: Color(0xFFFFCD4A),
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(8),
+                                                            ),
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal: 12,
+                                                              vertical: 8,
+                                                            ),
+                                                          ),
+                                                          child: Text(
+                                                            '사용하기',
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Color(0xFFFFCD4A),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 12,
+                                                  vertical: 8,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                '사용하기',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
+                              );
+                            },
+                          )
+                              : GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 6.0,
+                              mainAxisSpacing: 6.0,
+                            ),
+                            itemCount: 7,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  color: Colors.grey[200],
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 3),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[350],
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Image.asset(
+                                            catImagePaths[index],
+                                            width: 63,
+                                            height: 63,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text(
+                                        catNames[index],
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(width: 8),
+                                          Container(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // 사용하기 버튼이 눌렸을 때 실행되는 코드 작성
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Color(0xFFFFCD4A),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                minimumSize: Size(72, 32),
+                                              ),
+                                              child: Text(
+                                                '사용하기',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 8),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          )
                       ),
                     ),
                   ),

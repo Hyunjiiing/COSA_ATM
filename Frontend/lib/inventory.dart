@@ -47,6 +47,14 @@ class _InventoryScreenState extends State<InventoryScreen> {
     2,
   ];
 
+  final List<String> itemImagePaths = [
+    'images/item1.png',
+    'images/item2.png',
+    'images/item3.png',
+    'images/item1.png',
+    'images/item4.png',
+  ];
+
   final List<String> catNames = [
     '냥냥이',
     '치즈냥이',
@@ -200,13 +208,13 @@ class _InventoryScreenState extends State<InventoryScreen> {
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
-                              crossAxisSpacing: 6.0,
-                              mainAxisSpacing: 6.0,
+                              crossAxisSpacing: 5.0,
+                              mainAxisSpacing: 5.0,
                             ),
                             itemCount: 5,
                             itemBuilder: (BuildContext context, int index) {
                               return ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(3),
                                 child: Container(
                                   color: Colors.grey[200],
                                   child: Column(
@@ -214,21 +222,33 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                     children: [
                                       SizedBox(height: 8),
                                       Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 8),
+                                        padding: EdgeInsets.symmetric(horizontal: 5),
                                         child: Container(
-                                          padding: EdgeInsets.all(8),
                                           decoration: BoxDecoration(
                                             color: Colors.grey[350],
                                             borderRadius: BorderRadius.circular(8),
                                           ),
-                                          child: Image.asset(
-                                            'images/item1.png',
-                                            width: 20,
-                                            height: 20,
+                                          child: Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              Image.asset(
+                                                itemImagePaths[index],
+                                                width: 63,
+                                                height: 63,
+                                              ),
+                                              Container(
+                                                width: 63,
+                                                height: 63,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.black, width: 0.5),
+                                                  borderRadius: BorderRadius.circular(7),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 8),
+                                      SizedBox(height: 4),
                                       Text(
                                         itemNames[index],
                                         style: TextStyle(
@@ -236,7 +256,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                           fontSize: 13,
                                         ),
                                       ),
-                                      SizedBox(height: 15),
+                                      SizedBox(height: 4),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
@@ -290,6 +310,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                                             shape: RoundedRectangleBorder(
                                                               borderRadius: BorderRadius.circular(8),
                                                             ),
+                                                            minimumSize: Size(72, 32),
                                                             padding: EdgeInsets.symmetric(
                                                               horizontal: 12,
                                                               vertical: 8,
@@ -313,8 +334,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(8),
                                                 ),
+                                                minimumSize: Size(50, 32),
                                                 padding: EdgeInsets.symmetric(
-                                                  horizontal: 12,
+                                                  horizontal: 10,
                                                   vertical: 8,
                                                 ),
                                               ),
@@ -393,7 +415,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                                 minimumSize: Size(72, 32),
                                               ),
                                               child: Text(
-                                                '사용하기',
+                                                '장착하기',
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12,

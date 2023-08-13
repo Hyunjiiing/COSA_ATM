@@ -301,7 +301,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                   Text(
                                     '지도',
-                                    style: TextStyle(color: currentTap==0 ? Colors.black : Colors.grey),
+                                    style: TextStyle(color: currentTap==0 ? Colors.black : Colors.grey,
+                                      fontFamily: 'Bit',
+                                    ),
                                   )
                                 ],
                               ),
@@ -339,12 +341,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                 child: Image.asset(
                                   "images/petprint.png",
                                   color: currentTap==1 ? Colors.black : Colors.grey,
-
                                 ),
                               ),
                               Text(
                                 '펫',
-                                style: TextStyle(color: currentTap==1 ? Colors.black : Colors.grey),
+                                style: TextStyle(color: currentTap==1 ? Colors.black : Colors.grey,
+                                    fontFamily: 'Bit'
+                                ),
                               ),
                             ],
                           ),
@@ -380,7 +383,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               Text(
                                 '카메라',
-                                style: TextStyle(color: currentTap==2 ? Colors.black : Colors.grey),
+                                style: TextStyle(color: currentTap==2 ? Colors.black : Colors.grey,
+                                  fontFamily: 'Bit',
+                                ),
                               ),
                             ],
                           ),
@@ -416,7 +421,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               Text(
                                 '상점',
-                                style: TextStyle(color: currentTap==3 ? Colors.black : Colors.grey),
+                                style: TextStyle(color: currentTap==3 ? Colors.black : Colors.grey,
+                                  fontFamily: 'Bit',
+                                ),
                               ),
                             ],
                           ),
@@ -450,12 +457,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.settings,
+                                    Icons.perm_identity,
                                     color: currentTap==4 ? Colors.black : Colors.grey,
                                   ),
                                   Text(
-                                    '설정',
-                                    style: TextStyle(color: currentTap==4 ? Colors.black : Colors.grey),
+                                    '내 정보',
+                                    style: TextStyle(color: currentTap==4 ? Colors.black : Colors.grey,
+                                      fontFamily: 'Bit',
+                                    ),
                                   )
                                 ],
                               ),

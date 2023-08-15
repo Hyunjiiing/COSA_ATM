@@ -1,6 +1,6 @@
 {
-    "name": "cosa_atm",
-    "short_name": "cosa_atm",
+    "name": "atmdemo",
+    "short_name": "atmdemo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

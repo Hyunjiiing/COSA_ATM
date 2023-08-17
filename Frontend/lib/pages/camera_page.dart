@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:cosa_atm/pages/map_page.dart';
 import 'package:camera/camera.dart';
+import 'package:cosa_atm/bottom_bar.dart';
+import 'package:cosa_atm/map_page.dart';
 import 'package:flutter/material.dart';
 
 // A screen that allows users to take a picture using a given camera.
-class CameraPage extends StatefulWidget {
-  const CameraPage({
+class camera_page extends StatefulWidget {
+  const camera_page({
     super.key,
     required this.camera,
   });
@@ -14,10 +15,10 @@ class CameraPage extends StatefulWidget {
   final CameraDescription camera;
 
   @override
-  State<CameraPage> createState() => _CameraPageState();
+  State<camera_page> createState() => _camera_pageState();
 }
 
-class _CameraPageState extends State<CameraPage> {
+class _camera_pageState extends State<camera_page> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
@@ -56,36 +57,47 @@ class _CameraPageState extends State<CameraPage> {
               children: [
                 Column(
                   children: [
-                    Expanded(flex: 1, child: CameraPreview(_controller)),
+                    Expanded(flex:1, child: CameraPreview(_controller)),
                   ],
                 ),
                 Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width / 10 * 7,
+                    width: MediaQuery.of(context).size.width/10*7,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.transparent,
-                        border: Border.all(color: Color(0xFFFFCD4A), width: 3)),
+                        border: Border.all(color: Color(0xFFFFCD4A),width: 3)
+                    ),
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height / 100 * 20,
-                  decoration:
-                      BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                  height: MediaQuery.of(context).size.height/100*20,
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5)
+                  ),
                 ),
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                      margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height / 100 * 8),
-                      child: Text(
-                        "원의 크기에 맞춰서\n맨홀을 촬영해 주세요",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 25),
-                        textAlign: TextAlign.center,
-                      )),
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/100*8),
+                      child: Text("원의 크기에 맞춰서\n맨홀을 촬영해 주세요",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 25),textAlign: TextAlign.center,)
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 35, 0, 0),
+                    child: MaterialButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: (){
+                        setState(() {
+                          currentTap=0;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.close,color: Colors.white,),
+                    ),
+                  ),
                 )
               ],
             );
@@ -111,8 +123,10 @@ class _CameraPageState extends State<CameraPage> {
           child: Stack(
             children: [
               Container(
-                decoration:
-                    BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle
+                ),
               ),
               Center(
                 child: Container(
@@ -120,17 +134,17 @@ class _CameraPageState extends State<CameraPage> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black, width: 3)),
+                      border: Border.all(color: Colors.black,width: 3)
+                  ),
                 ),
               )
             ],
-          )),
+          )
+      ),
     );
   }
 }
-
-// A widget that displays the picture taken by the user.
-class DisplayPictureScreen extends StatelessWidget {
+/*class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
 
   const DisplayPictureScreen({super.key, required this.imagePath});
@@ -144,30 +158,29 @@ class DisplayPictureScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-              width: MediaQuery.of(context).size.width / 100 * 90,
-              height: MediaQuery.of(context).size.height / 100 * 70,
-              child: Image.file(
-                File(imagePath),
-                fit: BoxFit.contain,
-              )),
+              width: MediaQuery.of(context).size.width/100*90,
+              height: MediaQuery.of(context).size.height/100*70,
+              child: Image.file(File(imagePath),fit: BoxFit.contain,)
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MaterialButton(
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 100 * 40,
-                  height: MediaQuery.of(context).size.height / 100 * 8,
+                  width: MediaQuery.of(context).size.width/100*40,
+                  height: MediaQuery.of(context).size.height/100*8,
                   child: Center(child: Text("다시 찍기")),
                   decoration: BoxDecoration(
                       color: Colors.redAccent.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
                 ),
                 onPressed: () async {
                   final cameras = await availableCameras();
                   final firstCamera = cameras.first;
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => CameraPage(
+                      builder: (context) => camera_page(
                         camera: firstCamera,
                       ),
                     ),
@@ -176,18 +189,19 @@ class DisplayPictureScreen extends StatelessWidget {
               ),
               MaterialButton(
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 100 * 40,
-                  height: MediaQuery.of(context).size.height / 100 * 8,
+                  width: MediaQuery.of(context).size.width/100*40,
+                  height: MediaQuery.of(context).size.height/100*8,
                   child: Center(child: Text("확인")),
                   decoration: BoxDecoration(
                       color: Colors.blueAccent.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
                 ),
-                onPressed: () {
-                  //add_marker("사진 이름");
+                onPressed: (){
+                  add_marker("사진 이름");
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => MapPage(),
+                      builder: (context) => map_page(),
                     ),
                   );
                 },
@@ -198,4 +212,92 @@ class DisplayPictureScreen extends StatelessWidget {
       ),
     );
   }
+}*/
+
+class DisplayPictureScreen extends StatefulWidget {
+  final String imagePath;
+
+  const DisplayPictureScreen({super.key, required this.imagePath});
+
+  @override
+  State<DisplayPictureScreen> createState() => _DisplayPictureScreenState();
 }
+
+class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height/100*10,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/100*90,
+            child: Stack(
+              children: [
+                Container(
+                    width: MediaQuery.of(context).size.width/100*100,
+                    height: MediaQuery.of(context).size.height/100*90,
+                    child: Image.file(File(widget.imagePath),fit: BoxFit.cover,)
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height/100*10,
+                    color: Colors.black.withOpacity(0.7),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MaterialButton(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width/100*40,
+                           height: MediaQuery.of(context).size.height/100*8,
+                           child: Center(child: Text("다시 시도",style: TextStyle(color: Colors.white,fontSize: 20),)),
+                         ),
+                         onPressed: () async {
+                           final cameras = await availableCameras();
+                            final firstCamera = cameras.first;
+                            Navigator.of(context).push(
+                             MaterialPageRoute(
+                               builder: (context) => camera_page(
+                                 camera: firstCamera,
+                               ),
+                             ),
+                            );
+                         },
+                        ),
+                        MaterialButton(
+                         child: Container(
+                           width: MediaQuery.of(context).size.width/100*40,
+                           height: MediaQuery.of(context).size.height/100*8,
+                            child: Center(child: Center(child: Text("확인",style: TextStyle(color: Colors.white,fontSize: 20),)),),
+                          ),
+                          onPressed: (){
+                            setState(() {
+                              currentTap=0;
+                            });
+                            add_marker("사진 이름");
+                           Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => map_page(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// A widget that displays the picture taken by the user.

@@ -1,3 +1,4 @@
+import 'package:cosa_atm/pages/loading_page.dart';
 import 'package:cosa_atm/pages/map_page.dart';
 import 'package:cosa_atm/pages/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -146,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
       //추후 testPage를 우리 앱의 메인 페이지로 변경
-      Get.offAll(() => map_page());
+      Get.offAll(() => loading_page());
     } on FirebaseAuthException catch (e) {
       //print(e);
       String message = '';

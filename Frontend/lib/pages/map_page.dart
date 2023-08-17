@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:camera/camera.dart';
 
@@ -25,8 +26,7 @@ late Uint8List markerIcon;
 
 List<Marker> _markers = [
   Marker(markerId: MarkerId("맨홀1"),draggable: true,position: LatLng(36.6305, 127.4578),infoWindow: InfoWindow(title: "1234"),icon: BitmapDescriptor.fromBytes(markerIcon)),
-  Marker(markerId: MarkerId("전봇대1"),draggable: true,position: LatLng(36.6299, 127.4590),infoWindow: InfoWindow(title: "5678"),icon: BitmapDescriptor.fromBytes(markerIcon))
-
+  Marker(markerId: MarkerId("전봇대1"),draggable: true,position: LatLng(36.6199, 127.4390),infoWindow: InfoWindow(title: "5678"),icon: BitmapDescriptor.fromBytes(markerIcon))
 ];
 
 Future<void> add_marker(String a)async {
@@ -34,15 +34,15 @@ Future<void> add_marker(String a)async {
 }
 
 Future<void> _getPosition() async{
-  LocationPermission permission = await Geolocator.requestPermission();
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
+  LocationPermission permission = await Geolocator.requestPermission(); //오류 해결 코드
+  Position position = await Geolocator.
+  getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   current_latitude = position.latitude;
   current_longitude = position.longitude;
 }
 
 void setCustomMapPin() async {
-  markerIcon = await getBytesFromAsset('images/pin.png', 130);
+  markerIcon = await getBytesFromAsset('assets/images/pin.png', 130);
 }
 
 Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -60,7 +60,7 @@ class _map_pageState extends State<map_page> {
 
   @override
   void initState() {
-
+    _getPosition();
   }
 
   @override
@@ -197,14 +197,14 @@ class _map_pageState extends State<map_page> {
             alignment: Alignment.bottomRight,
             child: MaterialButton(
               child: Container(
-                margin: EdgeInsets.only(bottom: 60,right: 10),
+                margin: EdgeInsets.only(bottom: 80,right: 0),
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
-                child: Center(child: Image.asset("images/crown.png",width: 40,))
+                child: Center(child: Image.asset("assets/images/crown.png",width: 40,))
               ),
               onPressed: (){
                 showDialog(
@@ -343,22 +343,16 @@ class _map_pageState extends State<map_page> {
             alignment: Alignment.bottomRight,
             child: MaterialButton(
               child: Container(
-                width: 80,
-                height: 30,
+                margin: EdgeInsets.only(bottom: 10),
+                height: 60,
+                width: 60,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.black),
+                    shape: BoxShape.circle,
+                  color: Colors.white
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.location_on_outlined),
-                    Text("내 위치")
-                  ],
-                ),
+                child: Icon(Icons.my_location,color: Colors.black,),
               ),
-              onPressed: (_goToTheMyLocation),
+              onPressed:(){_goToTheMyLocation();},
             ),
           ),
         ],

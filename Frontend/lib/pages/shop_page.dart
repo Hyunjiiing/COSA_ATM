@@ -5,6 +5,23 @@ import 'package:cosa_atm/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+List<String> shop_images = [
+  "assets/images/item1.png",
+  "assets/images/item2.png",
+  "assets/images/item3.png",
+  "assets/images/item4.png",
+  "assets/images/ticket1.png",
+  "assets/images/ticket2.png",
+];
+List<String> shop_description = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+];
+
 class shop_page extends StatefulWidget {
   const shop_page({Key? key}) : super(key: key);
 
@@ -138,7 +155,7 @@ class _shop_pageState extends State<shop_page> {
                                         child: Container(
                                           width: MediaQuery.of(context).size.width/100*20,
                                             height: MediaQuery.of(context).size.height/100*10,
-                                            child: Image.asset("images/img.png",fit: BoxFit.fill,)),
+                                            child: Image.asset(shop_images[idx],fit: BoxFit.fill,)),
                                       ),
                                     ),
                                     Container(
@@ -148,7 +165,7 @@ class _shop_pageState extends State<shop_page> {
                                           bottom: BorderSide(color: Colors.grey)
                                         )
                                       ),
-                                        child: Text("${idx},asdfasdf",style: TextStyle(fontSize: 20),),
+                                        child: Text(shop_description[idx],style: TextStyle(fontSize: 20),),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -219,7 +236,7 @@ class _shop_pageState extends State<shop_page> {
                                         child: Container(
                                             width: MediaQuery.of(context).size.width/100*20,
                                             height: MediaQuery.of(context).size.height/100*10,
-                                            child: Image.asset("images/img1.png",fit: BoxFit.contain,)),
+                                            child: Image.asset(shop_images[idx+1],fit: BoxFit.contain,)),
                                       ),
                                     ),
                                     Container(
@@ -229,7 +246,7 @@ class _shop_pageState extends State<shop_page> {
                                               bottom: BorderSide(color: Colors.grey)
                                           )
                                       ),
-                                      child: Text("${idx+1},sdfzsdf",style: TextStyle(fontSize: 20),),
+                                      child: Text(shop_description[idx+1],style: TextStyle(fontSize: 20),),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -367,14 +384,14 @@ class _shop_pageState extends State<shop_page> {
                         Container(
                             width: MediaQuery.of(context).size.width/100*90,
                             height: MediaQuery.of(context).size.height/100*50,
-                            child: Image.asset("images/img3.png",fit: BoxFit.contain,)
+                            child: Image.asset("assets/images/drawingMachine.png",fit: BoxFit.contain,)
                         ),
                         MaterialButton(
                             onPressed: (){},
                           child: Container(
                               width: MediaQuery.of(context).size.width/100*40,
                               height: MediaQuery.of(context).size.height/100*17,
-                              child: Image.asset("images/drawing.png",fit: BoxFit.cover,)
+                              child: Image.asset("assets/images/drawingButton_nomal.png",fit: BoxFit.contain,)
                           ),
                         )
                       ],

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cosa_atm/bottom_bar.dart';
-import 'package:cosa_atm/camera_page.dart';
+import 'package:cosa_atm/pages/camera_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
@@ -363,7 +363,7 @@ class _map_pageState extends State<map_page> {
           ),
         ],
       ),
-      bottomNavigationBar: map_bottom_bar(),
+      bottomNavigationBar: MapBottomBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: MaterialButton(
         child: Container(

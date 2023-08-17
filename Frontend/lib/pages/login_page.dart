@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
       //추후 testPage를 우리 앱의 메인 페이지로 변경
-      Get.offAll(() => MapPage());
+      Get.offAll(() => map_page());
     } on FirebaseAuthException catch (e) {
       //print(e);
       String message = '';

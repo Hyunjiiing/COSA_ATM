@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:cosa_atm/bottom_bar.dart';
-import 'package:cosa_atm/map_page.dart';
+import 'package:cosa_atm/pages/map_page.dart';
 import 'package:flutter/material.dart';
 
 // A screen that allows users to take a picture using a given camera.

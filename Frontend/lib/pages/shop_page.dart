@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:cosa_atm/bottom_bar.dart';
-import 'package:cosa_atm/camera_page.dart';
-import 'package:cosa_atm/map_page.dart';
+import 'package:cosa_atm/pages/camera_page.dart';
+import 'package:cosa_atm/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -386,7 +386,7 @@ class _shop_pageState extends State<shop_page> {
           ),
         ],
       ),
-      bottomNavigationBar: bottom_bar(),
+      bottomNavigationBar: BottomBar(),
     );
   }
 }

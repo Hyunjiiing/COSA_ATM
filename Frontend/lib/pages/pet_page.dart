@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 import 'package:cosa_atm/bottom_bar.dart';
+import 'package:cosa_atm/pages/inventory_page.dart';
+import 'package:cosa_atm/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +68,10 @@ class PetScreen extends StatelessWidget {
                     SizedBox(width: 7),
                     Text(
                       '1,240',
-                      style: TextStyle(fontSize: 13.0, color: Colors.white, fontFamily: 'Bit'),
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.white,
+                          fontFamily: 'Bit'),
                     ),
                   ],
                 ),
@@ -112,7 +117,10 @@ class PetScreen extends StatelessWidget {
                     SizedBox(width: 7),
                     Text(
                       'Level 3',
-                      style: TextStyle(fontSize: 13.0, color: Colors.white, fontFamily: 'Bit'),
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.white,
+                          fontFamily: 'Bit'),
                     ),
                   ],
                 ),
@@ -153,7 +161,9 @@ class PetScreen extends StatelessWidget {
                                   errorBorder: InputBorder.none,
                                   disabledBorder: InputBorder.none,
                                 ),
-                                style: TextStyle(fontSize: 50, fontFamily: 'Bit'), // 글씨 크기 변경
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontFamily: 'Bit'), // 글씨 크기 변경
                               ),
                             ),
                             Icon(
@@ -171,8 +181,7 @@ class PetScreen extends StatelessWidget {
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w400,
-                                fontFamily: 'Bit'
-                            ),
+                                fontFamily: 'Bit'),
                           ),
                           onPressed: () {
                             // 동작을 추가해주세요
@@ -190,7 +199,9 @@ class PetScreen extends StatelessWidget {
                         Text(
                           'LEVEL 3/20',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Bit'),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Bit'),
                         ),
                         Center(
                           child: Padding(
@@ -209,20 +220,29 @@ class PetScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Column(
-                              children: [
-                                Container(
-                                  width: 55,
-                                  height: 55,
-                                  child: Image.asset(
-                                    "assets/images/inventory.png",
+                            GestureDetector(
+                              onTap: () => {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => InventoryPage()))
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 55,
+                                    height: 55,
+                                    child: Image.asset(
+                                      "assets/images/inventory.png",
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '인벤토리',
-                                  style: TextStyle(fontSize: 18, fontFamily: 'Bit'),
-                                ),
-                              ],
+                                  Text(
+                                    '인벤토리',
+                                    style: TextStyle(
+                                        fontSize: 18, fontFamily: 'Bit'),
+                                  ),
+                                ],
+                              ),
                             ),
                             /*ElevatedButton(
                                 child: Text('인벤토리'),
@@ -243,7 +263,8 @@ class PetScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     '공유하기',
-                                    style: TextStyle(fontSize: 18, fontFamily: 'Bit'),
+                                    style: TextStyle(
+                                        fontSize: 18, fontFamily: 'Bit'),
                                   ),
                                 ],
                               ),
@@ -264,7 +285,7 @@ class PetScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/images/dog.png',
+              'assets/images/character1.png',
               height: 200,
               width: 200,
             ),
@@ -294,7 +315,7 @@ Future<File> _writeImageFile(String imagePath) async {
 
 Future<void> sharePet(BuildContext context) async {
   final dogName = context.read<PetBloc>().state.pet.name;
-  final imagePath = 'assets/images/dog.png';
+  final imagePath = 'assets/images/character1.png';
 
   try {
     final imageFile = await _writeImageFile(imagePath);
@@ -346,7 +367,7 @@ class PetState {
 }
 
 class PetBloc extends Bloc<PetEvent, PetState> {
-  PetBloc() : super(PetState(pet: Pet(money: 0, level: 0, name: '또리')));
+  PetBloc() : super(PetState(pet: Pet(money: 0, level: 0, name: '냥냥이')));
 
   @override
   Stream<PetState> mapEventToState(PetEvent event) async* {

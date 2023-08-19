@@ -57,7 +57,20 @@ class _camera_pageState extends State<camera_page> {
               children: [
                 Column(
                   children: [
-                    Expanded(flex:1, child: CameraPreview(_controller)),
+                    Expanded(flex:1, child:CameraPreview(
+                      _controller,
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: DecorationImage(
+                              image:
+                              AssetImage('assets/images/manhole10.jpg'),
+                              fit: BoxFit.fitWidth // 이미지 경로를 적절하게 수정하세요
+                          ),
+                        ),
+                      ),
+                    )),
                   ],
                 ),
                 Center(

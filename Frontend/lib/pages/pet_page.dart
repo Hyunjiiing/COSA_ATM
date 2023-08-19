@@ -209,20 +209,25 @@ class PetScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Column(
-                              children: [
-                                Container(
-                                  width: 55,
-                                  height: 55,
-                                  child: Image.asset(
-                                    "assets/images/inventory.png",
+                            MaterialButton(
+                              onPressed:(){
+                                //인벤토리 페이지
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 55,
+                                    height: 55,
+                                    child: Image.asset(
+                                      "assets/images/inventory.png",
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '인벤토리',
-                                  style: TextStyle(fontSize: 18, fontFamily: 'Bit'),
-                                ),
-                              ],
+                                  Text(
+                                    '인벤토리',
+                                    style: TextStyle(fontSize: 18, fontFamily: 'Bit'),
+                                  ),
+                                ],
+                              ),
                             ),
                             /*ElevatedButton(
                                 child: Text('인벤토리'),

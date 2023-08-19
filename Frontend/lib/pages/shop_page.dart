@@ -10,16 +10,30 @@ List<String> shop_images = [
   "assets/images/item2.png",
   "assets/images/item3.png",
   "assets/images/item4.png",
+  "assets/images/item5.png",
+  "assets/images/item6.png",
   "assets/images/ticket1.png",
   "assets/images/ticket2.png",
 ];
 List<String> shop_description = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
+  "치장아이템 뽑기권",
+  "랭킹 점수 2배 쿠폰",
+  "펫 먹이",
+  "경험치 부스트",
+  "아이템 품목 할인권",
+  "경험치 보너스",
+  "뽑기 10회",
+  "뽑기 1회",
+];
+List<String> shop_price = [
+  "100",
+  "130",
+  "20",
+  "200",
+  "500",
+  "250",
+  "1700",
+  "200",
 ];
 
 class shop_page extends StatefulWidget {
@@ -124,7 +138,7 @@ class _shop_pageState extends State<shop_page> {
                     border: Border.all(color: Colors.black,width: 0.5)
                   ),
                   child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: 8,
                       itemBuilder: (BuildContext ctx, int idx) {
                         return idx%2==0 ?
                           Row(
@@ -180,7 +194,7 @@ class _shop_pageState extends State<shop_page> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text("50",style: TextStyle(fontSize: 20),),
+                                              Text(shop_price[idx],style: TextStyle(fontSize: 20),),
                                               Icon(Icons.monetization_on,color: Colors.yellow,)
                                             ],
                                           ),
@@ -262,7 +276,7 @@ class _shop_pageState extends State<shop_page> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text("50",style: TextStyle(fontSize: 20),),
+                                              Text(shop_price[idx+1],style: TextStyle(fontSize: 20),),
                                               Icon(Icons.monetization_on,color: Colors.yellow,)
                                             ],
                                           ),

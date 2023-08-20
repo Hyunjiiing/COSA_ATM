@@ -57,7 +57,20 @@ class _camera_pageState extends State<camera_page> {
               children: [
                 Column(
                   children: [
-                    Expanded(flex:1, child: CameraPreview(_controller)),
+                    Expanded(flex:1, child:CameraPreview(
+                      _controller,
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          image: DecorationImage(
+                              image:
+                              AssetImage('assets/images/manhole10.jpg'),
+                              fit: BoxFit.fitWidth // 이미지 경로를 적절하게 수정하세요
+                          ),
+                        ),
+                      ),
+                    )),
                   ],
                 ),
                 Center(
@@ -241,7 +254,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 Container(
                     width: MediaQuery.of(context).size.width/100*100,
                     height: MediaQuery.of(context).size.height/100*90,
-                    child: Image.file(File(widget.imagePath),fit: BoxFit.cover,)
+                    child: Image.asset("assets/images/manhole10.jpg",fit: BoxFit.cover,)
+                  //Image.file(File(widget.imagePath),fit: BoxFit.cover,)
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

@@ -4,6 +4,7 @@ import 'package:cosa_atm/pages/camera_page.dart';
 import 'package:cosa_atm/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 List<String> shop_images = [
   "assets/images/item1.png",
@@ -12,35 +13,34 @@ List<String> shop_images = [
   "assets/images/item4.png",
   "assets/images/item5.png",
   "assets/images/item6.png",
-  "assets/images/ticket1.png",
-  "assets/images/ticket2.png",
 ];
+
 List<String> shop_description = [
   "치장아이템 뽑기권",
-  "랭킹 점수 2배 쿠폰",
-  "펫 먹이",
-  "경험치 부스트",
-  "아이템 품목 할인권",
-  "경험치 보너스",
-  "뽑기 10회",
-  "뽑기 1회",
+  "치장 아이템 5회 뽑기권",
+  "캐릭터 뽑기권",
+  "캐릭터 3회 뽑기권",
+  "경험치 5회 부스트",
+  "이름변경권",
 ];
 List<String> shop_price = [
-  "100",
-  "130",
-  "20",
-  "200",
-  "500",
-  "250",
-  "1700",
-  "200",
+  "5000",
+  "23900",
+  "10000",
+  "28900",
+  "1000",
+  "10000",
 ];
 
 class shop_page extends StatefulWidget {
-  const shop_page({Key? key}) : super(key: key);
+  final List<Marker> marker;
+
+  shop_page({
+    required List<Marker> this.marker
+  });
 
   @override
-  State<shop_page> createState() => _shop_pageState();
+  State<shop_page> createState() => _shop_pageState(marker: this.marker);
 }
 
 Future<void> _getPosition() async{
@@ -54,6 +54,12 @@ Future<void> _getPosition() async{
 int shopTap = 0;
 
 class _shop_pageState extends State<shop_page> {
+  final List<Marker> marker;
+
+  _shop_pageState({
+    required List<Marker> this.marker
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +76,7 @@ class _shop_pageState extends State<shop_page> {
                 Container(
                   height: MediaQuery.of(context).size.height/100*7,
                   child: Center(
-                    child: Text("상점",style: TextStyle(fontSize: 25),),
+                    child: Text("상점",style: TextStyle(fontSize: 25,fontFamily: 'Bit',),),
                   ),
                 ), //상점 글자
                 Container(
@@ -100,7 +106,7 @@ class _shop_pageState extends State<shop_page> {
                               )
                             ]
                           ),
-                          child: Center(child: Text("아이템",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),)),
+                          child: Center(child: Text("아이템",style: TextStyle(fontSize: 15,fontFamily: 'Bit',fontWeight: FontWeight.w800),)),
                         ),
                       ), //아이템 탭
                       MaterialButton(
@@ -125,7 +131,7 @@ class _shop_pageState extends State<shop_page> {
                                 )
                               ]
                           ),
-                          child: Center(child: Text("뽑기",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey,))),
+                          child: Center(child: Text("뽑기",style: TextStyle(fontFamily: 'Bit',fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey,))),
                         ),
                       ), //뽑기탭
                     ],
@@ -138,7 +144,7 @@ class _shop_pageState extends State<shop_page> {
                     border: Border.all(color: Colors.black,width: 0.5)
                   ),
                   child: ListView.builder(
-                    itemCount: 8,
+                    itemCount: shop_images.length,
                       itemBuilder: (BuildContext ctx, int idx) {
                         return idx%2==0 ?
                           Row(
@@ -179,7 +185,7 @@ class _shop_pageState extends State<shop_page> {
                                           bottom: BorderSide(color: Colors.grey)
                                         )
                                       ),
-                                        child: Text(shop_description[idx],style: TextStyle(fontSize: 20),),
+                                        child: Text(shop_description[idx],style: TextStyle(fontFamily: 'Bit',fontSize: 16),),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -194,7 +200,7 @@ class _shop_pageState extends State<shop_page> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text(shop_price[idx],style: TextStyle(fontSize: 20),),
+                                              Text(shop_price[idx],style: TextStyle(fontFamily: 'Bit',fontSize: 16),),
                                               Icon(Icons.monetization_on,color: Colors.yellow,)
                                             ],
                                           ),
@@ -216,7 +222,7 @@ class _shop_pageState extends State<shop_page> {
                                               ]
                                             ),
                                             child: Center(
-                                                child: Text("구매",style: TextStyle(color: Colors.white,fontSize: 15),)
+                                                child: Text("구매",style: TextStyle(fontFamily: 'Bit',color: Colors.white,fontSize: 15),)
                                             ),
                                           ),
                                         )
@@ -260,7 +266,7 @@ class _shop_pageState extends State<shop_page> {
                                               bottom: BorderSide(color: Colors.grey)
                                           )
                                       ),
-                                      child: Text(shop_description[idx+1],style: TextStyle(fontSize: 20),),
+                                      child: Text(shop_description[idx+1],style: TextStyle(fontFamily: 'Bit',fontSize: 16),),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -276,7 +282,7 @@ class _shop_pageState extends State<shop_page> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text(shop_price[idx+1],style: TextStyle(fontSize: 20),),
+                                              Text(shop_price[idx+1],style: TextStyle(fontSize: 16,fontFamily: 'Bit',),),
                                               Icon(Icons.monetization_on,color: Colors.yellow,)
                                             ],
                                           ),
@@ -298,7 +304,7 @@ class _shop_pageState extends State<shop_page> {
                                                 ]
                                             ),
                                             child: Center(
-                                                child: Text("구매",style: TextStyle(color: Colors.white,fontSize: 15),)
+                                                child: Text("구매",style: TextStyle(fontFamily: 'Bit',color: Colors.white,fontSize: 15),)
                                             ),
                                           ),
                                         )
@@ -323,7 +329,7 @@ class _shop_pageState extends State<shop_page> {
                 Container(
                   height: MediaQuery.of(context).size.height/100*7,
                   child: Center(
-                    child: Text("상점",style: TextStyle(fontSize: 25),),
+                    child: Text("상점",style: TextStyle(fontFamily: 'Bit',fontSize: 25),),
                   ),
                 ),
                 Container(
@@ -353,7 +359,7 @@ class _shop_pageState extends State<shop_page> {
                                 )
                               ]
                           ),
-                          child: Center(child: Text("아이템",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey,),)),
+                          child: Center(child: Text("아이템",style: TextStyle(fontFamily: 'Bit',fontSize: 15,fontWeight: FontWeight.w800,color: Colors.grey,),)),
                         ),
                       ), //아이템 탭
                       MaterialButton(
@@ -378,7 +384,7 @@ class _shop_pageState extends State<shop_page> {
                                 )
                               ]
                           ),
-                          child: Center(child: Text("뽑기",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800))),
+                          child: Center(child: Text("뽑기",style: TextStyle(fontFamily: 'Bit',fontSize: 15,fontWeight: FontWeight.w800))),
                         ),
                       ), //뽑기탭
                     ],
@@ -417,7 +423,7 @@ class _shop_pageState extends State<shop_page> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(marker: widget.marker,),
     );
   }
 }

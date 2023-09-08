@@ -3,16 +3,20 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/map_page.dart';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class camera_page extends StatefulWidget {
   const camera_page({
     super.key,
     required this.camera,
+    required this.marker,
   });
 
   final CameraDescription camera;
+  final List<Marker> marker;
 
   @override
   State<camera_page> createState() => _camera_pageState();
@@ -57,25 +61,12 @@ class _camera_pageState extends State<camera_page> {
               children: [
                 Column(
                   children: [
-                    Expanded(flex:1, child:CameraPreview(
-                      _controller,
-                      child: Container(
-                        alignment: Alignment.bottomCenter,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          image: DecorationImage(
-                              image:
-                              AssetImage('assets/images/manhole10.jpg'),
-                              fit: BoxFit.fitWidth // 이미지 경로를 적절하게 수정하세요
-                          ),
-                        ),
-                      ),
-                    )),
+                    Expanded(flex:1, child: CameraPreview(_controller)),
                   ],
                 ),
                 Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width/10*7,
+                    width: MediaQuery.of(context).size.width/100*85,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.transparent,
@@ -128,6 +119,7 @@ class _camera_pageState extends State<camera_page> {
                 MaterialPageRoute(
                   builder: (context) => DisplayPictureScreen(
                     imagePath: image.path,
+                    markers: widget.marker,
                   ),
                 ),
               );
@@ -229,16 +221,61 @@ class _camera_pageState extends State<camera_page> {
 
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
+  final List<Marker> markers;
 
-  const DisplayPictureScreen({super.key, required this.imagePath});
+  const DisplayPictureScreen({
+    super.key,
+    required this.imagePath,
+    required this.markers,
+  });
 
   @override
   State<DisplayPictureScreen> createState() => _DisplayPictureScreenState();
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
+
   @override
   Widget build(BuildContext context) {
+
+    Future<void> add_marker(String a,String imagePath)async {
+      widget.markers.add(
+          Marker(
+              markerId: MarkerId(a),
+              draggable: true,
+              position: LatLng(current_latitude,current_longitude),
+              onTap: (){
+                showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        actionsPadding: EdgeInsets.zero,
+                        contentPadding: EdgeInsets.zero,
+                        content: Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          height: MediaQuery.of(context).size.height*0.35,
+                          child: Column(
+                            children: [
+                              Text("맨홀 사진",style: TextStyle(fontSize: 25,fontFamily: 'Bit',),),
+                              Container(
+                                  width: MediaQuery.of(context).size.width*0.56,
+                                  height: MediaQuery.of(context).size.height*0.28,
+                                  child: Image.file(File(widget.imagePath),fit: BoxFit.fill,)
+                              ),
+                            ],
+                          ),
+                        )
+                      );
+                    }
+                );
+              },
+              icon: BitmapDescriptor.fromBytes(markerIcon)
+          )
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
@@ -254,8 +291,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                 Container(
                     width: MediaQuery.of(context).size.width/100*100,
                     height: MediaQuery.of(context).size.height/100*90,
-                    child: Image.asset("assets/images/manhole10.jpg",fit: BoxFit.cover,)
-                  //Image.file(File(widget.imagePath),fit: BoxFit.cover,)
+                    child: Image.file(File(widget.imagePath),fit: BoxFit.cover,)
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -269,7 +305,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                           child: Container(
                             width: MediaQuery.of(context).size.width/100*40,
                            height: MediaQuery.of(context).size.height/100*8,
-                           child: Center(child: Text("다시 시도",style: TextStyle(color: Colors.white,fontSize: 20),)),
+                           child: Center(child: Text("다시 시도",style: TextStyle(fontFamily: 'Bit',color: Colors.white,fontSize: 20),)),
                          ),
                          onPressed: () async {
                            final cameras = await availableCameras();
@@ -278,6 +314,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                              MaterialPageRoute(
                                builder: (context) => camera_page(
                                  camera: firstCamera,
+                                 marker: widget.markers,
                                ),
                              ),
                             );
@@ -287,13 +324,13 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                          child: Container(
                            width: MediaQuery.of(context).size.width/100*40,
                            height: MediaQuery.of(context).size.height/100*8,
-                            child: Center(child: Center(child: Text("확인",style: TextStyle(color: Colors.white,fontSize: 20),)),),
+                            child: Center(child: Center(child: Text("확인",style: TextStyle(fontFamily: 'Bit',color: Colors.white,fontSize: 20),)),),
                           ),
                           onPressed: (){
                             setState(() {
                               currentTap=0;
                             });
-                            add_marker("사진 이름");
+                            add_marker("사진 이름",widget.imagePath);
                            Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => map_page(),

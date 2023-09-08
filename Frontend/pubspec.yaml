@@ -48,6 +48,9 @@ dependencies:
   google_maps_flutter: ^2.4.0
   camera: ^0.10.5+3
   google_fonts: ^5.1.0
+  custom_info_window: ^1.0.1
+  circular_menu: ^2.0.1
+  font_awesome_flutter: ^10.5.0
 
 dev_dependencies:
   flutter_test:

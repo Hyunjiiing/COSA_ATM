@@ -7,12 +7,17 @@ import 'package:cosa_atm/pages/store_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapBottomBar extends StatefulWidget {
-  const MapBottomBar({Key? key}) : super(key: key);
+  final List<Marker> marker;
+
+  MapBottomBar({
+    required List<Marker> this.marker
+  });
 
   @override
-  State<MapBottomBar> createState() => _MapBottomBarState();
+  State<MapBottomBar> createState() => _MapBottomBarState(marker: this.marker);
 }
 
 int currentTap = 0;
@@ -26,6 +31,12 @@ Future<void> _getPosition() async {
 }
 
 class _MapBottomBarState extends State<MapBottomBar> {
+  final List<Marker> marker;
+
+  _MapBottomBarState({
+    required List<Marker> this.marker
+  });
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -96,7 +107,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PetPage()));
+                                  builder: (context) => PetPage(marker: widget.marker,)));
                         });
                       },
                       child: Container(
@@ -143,7 +154,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => shop_page()));
+                                  builder: (context) => shop_page(marker: widget.marker,)));
                         });
                       },
                       child: Container(
@@ -182,7 +193,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SettingPage()));
+                                  builder: (context) => SettingPage(marker: widget.marker,)));
                         });
                       },
                       child: Column(
@@ -229,7 +240,12 @@ class _MapBottomBarState extends State<MapBottomBar> {
 }
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({Key? key}) : super(key: key);
+  const BottomBar({
+    super.key,
+    required this.marker,
+  });
+
+  final List<Marker> marker;
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -298,7 +314,7 @@ class _BottomBarState extends State<BottomBar> {
                   currentTap=1;
                   Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=> PetPage())
+                          MaterialPageRoute(builder: (context)=> PetPage(marker: widget.marker,))
                       );
                 });
               },
@@ -342,7 +358,7 @@ class _BottomBarState extends State<BottomBar> {
                   currentTap=2;
                     Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=>camera_page(camera: firstCamera,))
+                          MaterialPageRoute(builder: (context)=>camera_page(camera: firstCamera,marker: widget.marker,))
                       );
                 });
               },
@@ -379,7 +395,7 @@ class _BottomBarState extends State<BottomBar> {
                   currentTap=3;
                   Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=>shop_page())
+                          MaterialPageRoute(builder: (context)=>shop_page(marker: widget.marker,))
                       );
                 });
               },
@@ -416,7 +432,7 @@ class _BottomBarState extends State<BottomBar> {
                   currentTap=4;
                   Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=>SettingPage())
+                          MaterialPageRoute(builder: (context)=>SettingPage(marker: widget.marker,))
                       );
                 });
               },

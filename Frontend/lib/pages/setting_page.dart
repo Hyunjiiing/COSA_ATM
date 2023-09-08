@@ -1,18 +1,30 @@
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SettingPage extends StatelessWidget {
+  final List<Marker> marker;
+
+  SettingPage({
+    required List<Marker> this.marker
+  });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: baseSettingsPage(),
+      home: baseSettingsPage(marker: this.marker,),
     );
   }
 }
 
 class baseSettingsPage extends StatefulWidget {
+  final List<Marker> marker;
+
+  baseSettingsPage({
+    required List<Marker> this.marker
+  });
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -251,7 +263,7 @@ class _SettingsPageState extends State<baseSettingsPage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(marker: widget.marker,),
     );
   }
 }

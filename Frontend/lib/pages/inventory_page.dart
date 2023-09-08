@@ -1,7 +1,14 @@
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class InventoryPage extends StatelessWidget {
+  final List<Marker> marker;
+
+  InventoryPage({
+    required List<Marker> this.marker
+  });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -9,12 +16,18 @@ class InventoryPage extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Bit',
       ),
-      home: InventoryScreen(),
+      home: InventoryScreen(marker: this.marker,),
     );
   }
 }
 
 class InventoryScreen extends StatefulWidget {
+  final List<Marker> marker;
+
+  InventoryScreen({
+    required List<Marker> this.marker
+  });
+
   @override
   _InventoryScreenState createState() => _InventoryScreenState();
 }
@@ -506,6 +519,6 @@ class _InventoryScreenState extends State<InventoryScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomBar());
+        bottomNavigationBar: BottomBar(marker: widget.marker,));
   }
 }

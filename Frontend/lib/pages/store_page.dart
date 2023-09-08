@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
 
 import 'package:cosa_atm/bottom_bar.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class StorePage extends StatelessWidget {
+  final List<Marker> marker;
+
+  StorePage({
+    required List<Marker> this.marker
+  });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BaseStorePage(),
+      home: BaseStorePage(marker: this.marker,),
     );
   }
 }
 
 class BaseStorePage extends StatefulWidget {
+  final List<Marker> marker;
+
+  BaseStorePage({
+    required List<Marker> this.marker
+  });
+
   @override
-  _StorePageState createState() => _StorePageState();
+  _StorePageState createState() => _StorePageState(marker: this.marker);
 }
 
 class _StorePageState extends State<BaseStorePage> {
+  final List<Marker> marker;
+
+  _StorePageState({
+    required List<Marker> this.marker
+  });
   String selectedButton = '아이템';
 
   @override
@@ -335,7 +353,7 @@ class _StorePageState extends State<BaseStorePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(marker: widget.marker,),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cosa_atm/pages/loading_page.dart';
 import 'package:cosa_atm/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.yellow,
       ),
-      home: LoginPage(),
+      home: loading_page(),
     );
   }
 }

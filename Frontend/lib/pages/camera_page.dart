@@ -1,11 +1,15 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/map_page.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class camera_page extends StatefulWidget {
@@ -237,6 +241,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference user = FirebaseFirestore.instance.collection('User');
 
     Future<void> add_marker(String a,String imagePath)async {
       widget.markers.add(
@@ -326,11 +331,41 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                            height: MediaQuery.of(context).size.height/100*8,
                             child: Center(child: Center(child: Text("확인",style: TextStyle(fontFamily: 'Bit',color: Colors.white,fontSize: 20),)),),
                           ),
-                          onPressed: (){
+                          onPressed: () async {
                             setState(() {
                               currentTap=0;
                             });
                             add_marker("사진 이름",widget.imagePath);
+
+                            DocumentSnapshot userInfo = await user.doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3').get();
+                            Map<String, dynamic> data = userInfo.data()! as Map<String, dynamic>;
+                            List<dynamic> li = data["character"];
+                            for (int i = 0; i < li.length; i++) {
+                              if (li[i]["key"] == data["select"]) {
+                                li[i]["exp"] += 10;
+                                // 여기서 어떻게 레벨 올릴지도 고민
+                              }
+                            }
+
+                            bool isToday(Timestamp timestamp) {
+                              DateTime date = timestamp.toDate();
+                              DateTime now = DateTime.now();
+
+                              return date.year == now.year && date.month == now.month && date.day == now.day;
+                            }
+
+                            Map<String, dynamic> quest = data["quest"] as Map<String, dynamic>;
+                            if (isToday(quest["date"])) {
+                              quest['quest1'] = quest['quest2'] = quest['quest3'] = 0;
+                            }
+                            quest['quest2'] += 1;
+
+                            user
+                                .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                .update({'character': li, 'count': data["count"] + 1, 'quest': quest})
+                                .then((value) => print("User Updated"))
+                                .catchError((error) => print("Failed to update user: $error"));
+
                            Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => map_page(),

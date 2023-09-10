@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:circular_menu/circular_menu.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/camera_page.dart';
-import 'package:cosa_atm/testPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,6 +12,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:camera/camera.dart';
+
+import 'home_page.dart';
 
 List<String> quest =[
   "검토하기 3회",
@@ -33,6 +34,7 @@ List<Marker> _markers = [];
 
 class map_page extends StatefulWidget {
   const map_page({Key? key}) : super(key: key);
+  static String routeName = "/";
 
   @override
   State<map_page> createState() => _map_pageState();
@@ -391,7 +393,7 @@ class _map_pageState extends State<map_page> {
         ),
         CircularMenuItem(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>testPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
           },
           icon: Icons.flaky,
           iconColor: Color(0xffFFB156),

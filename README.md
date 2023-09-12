@@ -17,6 +17,17 @@
 응애
 ```
 
+## 로컬서버실행
+로컬로 서버 실행 시 새로운 가상환경 실행 후 requirements.txt 다운로드(아래 명령어 실행)!
+```
+$ pip install -r requirements.txt
+```
+
+로컬서버 구동
+```
+$ uvicorn main:app --reload
+```
+
 ## 의존성
 ```
 응애

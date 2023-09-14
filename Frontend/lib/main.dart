@@ -3,6 +3,8 @@ import 'package:cosa_atm/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,11 +27,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.yellow,
-      ),
-      home: loading_page(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.yellow,
+        ),
+        home: loading_page(),
     );
   }
 }

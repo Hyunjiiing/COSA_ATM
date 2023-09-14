@@ -1,32 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cosa_atm/pages/map_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'GridView',
-        home: Scaffold(
+    return Scaffold(
             resizeToAvoidBottomInset: false,
-            body: SingleChildScrollView(child: Home())));
+            body: SingleChildScrollView(child: Home()));
   }
 }
+final List<bool> selectedImageIndexes = [false, false, false, false, false, false, false, false, false];
+final List<String> keys = [];
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference user = FirebaseFirestore.instance.collection('User');
+
     final sizeX = (MediaQuery.of(context).size.width);
     final sizeY = (MediaQuery.of(context).size.height - 100);
     return Container(
       child: Column(
         children: [
           Container(
-            height: 25,
+            height: 55,
             color: Color(0xffFFCD4A),
           ),
           Container(
@@ -38,8 +42,8 @@ class Home extends StatelessWidget {
                     "아래 사진들 중 노후화된\n'맨홀'을 모두 골라주세요",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500),
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500, fontFamily: 'Bit',),
                   ),
                 ),
                 Container(
@@ -51,17 +55,28 @@ class Home extends StatelessWidget {
           Container(
             height: 75,
           ),
-          SizedBox(
-              width: sizeX,
-              height: sizeY - 200,
-              child: GridView.count(
+      SizedBox(
+        width: sizeX,
+        height: sizeY - 200,
+        child: FutureBuilder(
+          future: createGallery(9),
+          builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return GridView.count(
                 scrollDirection: Axis.vertical,
                 crossAxisCount: 3,
                 mainAxisSpacing: 5.0,
                 crossAxisSpacing: 5.0,
-                padding: const EdgeInsets.all(5.0),
-                children: createGallery(9),
-              )),
+                padding: const EdgeInsets.all(5),
+                children:snapshot.data!,
+              );
+            }
+          },
+        ),),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -89,8 +104,44 @@ class Home extends StatelessWidget {
                 width: 30,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Handle the button press here
+                  // 후처리
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+
+                  DocumentSnapshot userInfo = await user.doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3').get();
+                  Map<String, dynamic> data = userInfo.data()! as Map<String, dynamic>;
+
+                  bool isToday(Timestamp timestamp) {
+                    DateTime date = timestamp.toDate();
+                    DateTime now = DateTime.now();
+
+                    return date.year == now.year && date.month == now.month && date.day == now.day;
+                  }
+
+                  Map<String, dynamic> quest = data["quest"] as Map<String, dynamic>;
+                  if (isToday(quest["date"])) {
+                    quest['quest1'] = quest['quest2'] = quest['quest3'] = 0;
+                  }
+                  quest['quest1'] += 1;
+
+                  user
+                      .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                      .update({'quest': quest})
+                      .then((value) => print("User Updated"))
+                      .catchError((error) => print("Failed to update user: $error"));
+
+                  CollectionReference manhole = FirebaseFirestore.instance.collection('Manhole');
+                  for (int i = 0; i < 9; i++) {
+                    DocumentSnapshot manholeInfo = await manhole.doc(keys[i]).get();
+                    Map<String, dynamic> data = manholeInfo.data()! as Map<String, dynamic>;
+                    if (selectedImageIndexes[i]) {
+                        manhole
+                            .doc(keys[i])
+                            .update({'count': data['count'] + 1});
+                      }
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xffFFCD4A),
@@ -115,34 +166,36 @@ class Home extends StatelessWidget {
     );
   }
 
-  List<Widget> createGallery(int numImg) {
+  Future<List<Widget>> createGallery(int numImg) async {
+    CollectionReference manhole = FirebaseFirestore.instance.collection('Manhole');
+    QuerySnapshot url = await manhole.limit(9).get();
+
     List<Widget> images = [];
     List<String> urls = [];
-    urls.add('../assets/images/manhole1.png');
-    urls.add('../assets/images/manhole2.png');
-    urls.add('../assets/images/manhole3.png');
-    urls.add('../assets/images/manhole4.png');
-    urls.add('../assets/images/manhole5.png');
-    urls.add('../assets/images/manhole6.png');
-    urls.add('../assets/images/manhole7.png');
-    urls.add('../assets/images/manhole8.png');
-    urls.add('../assets/images/manhole9.png');
+
+    url.docs.forEach((doc) {
+      var data = doc.data()! as Map<String, dynamic>;
+      urls.add(data['url']);
+      keys.add(data['key']);
+    });
 
     Widget image;
     int i = 0;
     int len = urls.length;
+
     while (i < numImg) {
-      image = SelectableImage(imageUrl: urls[i % len]);
+      image = SelectableImage(imageUrl: urls[i % len], index: i); // 이 부분을 수정했습니다.
       images.add(image);
       i++;
     }
+
     return images;
-  }
-}
+  }}
 
 class SelectableImage extends StatefulWidget {
   final String imageUrl;
-  const SelectableImage({Key? key, required this.imageUrl}) : super(key: key);
+  final int index;
+  const SelectableImage({Key? key, required this.imageUrl, required this.index}) : super(key: key); // 이 부분을 수정했습니다.
 
   @override
   _SelectableImageState createState() => _SelectableImageState();
@@ -154,6 +207,7 @@ class _SelectableImageState extends State<SelectableImage> {
   void _toggleSelection() {
     setState(() {
       _isSelected = !_isSelected;
+      selectedImageIndexes[widget.index] = !selectedImageIndexes[widget.index];
     });
   }
 
@@ -164,26 +218,29 @@ class _SelectableImageState extends State<SelectableImage> {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover, image: AssetImage(widget.imageUrl)),
+            fit: BoxFit.cover,
+            image: NetworkImage(widget.imageUrl), // Image.network 대신 NetworkImage를 사용합니다.
+          ),
         ),
         child: _isSelected
             ? Stack(
-                children: [
-                  Positioned(
-                    top: 8.0,
-                    left: 8.0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                      child: Image.asset('../assets/images/check.png'),
-                    ),
-                  ),
-                ],
-              )
+          children: [
+            Positioned(
+              top: 8.0,
+              left: 8.0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child:
+                Image.asset('assets/images/check.png'),
+              ),
+            ),
+          ],
+        )
             : null,
       ),
     );
   }
-}
+  }

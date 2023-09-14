@@ -13,6 +13,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:camera/camera.dart';
 
+import 'home_page.dart';
+
 List<String> quest =[
   "검토하기 3회",
   "맨홀찍기 3회",
@@ -64,7 +66,6 @@ class map_page extends StatefulWidget {
   });
 
   final List<Marker> marker;
-
   @override
   State<map_page> createState() => _map_pageState();
 }
@@ -331,7 +332,6 @@ class _map_pageState extends State<map_page> {
         ),
         CircularMenuItem(
           onTap: (){
-            print(quest_current);
             showDialog(
                 context: context,
                 barrierDismissible: true,

@@ -11,7 +11,11 @@ Future<void> main() async {
           apiKey: "AIzaSyDlV-E88CZRz2E6wxHA0EDmWmpelaYR5xs",
           appId: "1:532845807429:android:36b20b8eb2363e4db9602c",
           messagingSenderId: "532845807429",
-          projectId: "cosa-atm-80a90"));
+          projectId: "cosa-atm-80a90",
+          storageBucket: "gs://cosa-atm-80a90.appspot.com",
+
+      )
+  );
   runApp(const MyApp());
 }
 

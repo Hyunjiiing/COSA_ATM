@@ -1,10 +1,12 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/map_page.dart';
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // A screen that allows users to take a picture using a given camera.
@@ -238,32 +240,70 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
   @override
   Widget build(BuildContext context) {
 
-    Future<void> add_marker(String a,String imagePath)async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    FirebaseStorage storage=FirebaseStorage.instance;
+    String url="";
+
+    Future<void> add_marker(String a,String imagePath,String _url)async {
+      final firebaseStorageRef = storage.ref().child('manhole').child('${a}.png');
+      url= await firebaseStorageRef.getDownloadURL();
+
       widget.markers.add(
           Marker(
               markerId: MarkerId(a),
               draggable: true,
               position: LatLng(current_latitude,current_longitude),
-              onTap: (){
+              onTap: ()async{
+                List<Placemark> placemarks = await placemarkFromCoordinates(current_latitude, current_longitude);
+                String locality="${placemarks[0].locality}";
+                String subLocality="${placemarks[0].subLocality}";
+                String thoroughfare="${placemarks[0].thoroughfare}";
+                String subThoroughfare="${placemarks[0].subThoroughfare}";
+                String address = locality + " " + subLocality + " " + thoroughfare + " " + subThoroughfare;
+                await _firestore.collection("Marker").doc("${current_latitude},${current_longitude}").set(
+                    {
+                      "address": "${address}",
+                      "lat": "${current_latitude}",
+                      "lon": "${current_longitude}",
+                      "name": "$a"
+                    }
+                );
                 showDialog(
                     context: context,
                     barrierDismissible: true,
                     builder: (BuildContext context){
                       return AlertDialog(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         actionsPadding: EdgeInsets.zero,
                         contentPadding: EdgeInsets.zero,
                         content: Container(
-                          width: MediaQuery.of(context).size.width*0.7,
-                          height: MediaQuery.of(context).size.height*0.35,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height*0.60,
                           child: Column(
                             children: [
-                              Text("맨홀 사진",style: TextStyle(fontSize: 25,fontFamily: 'Bit',),),
                               Container(
-                                  width: MediaQuery.of(context).size.width*0.56,
-                                  height: MediaQuery.of(context).size.height*0.28,
-                                  child: Image.file(File(widget.imagePath),fit: BoxFit.fill,)
+                                  height: MediaQuery.of(context).size.height/100*8,
+                                  child: Center(child: Text("맨홀 사진",style: TextStyle(fontSize: 30,fontFamily: 'Bit',),))
                               ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width*0.70,
+                                  height: MediaQuery.of(context).size.height*0.35,
+                                  child: Image.network(url)
+                              ),
+                              Container(
+                                  height: MediaQuery.of(context).size.height/100*8,
+                                  child: Center(child: Text("${address}",style: TextStyle(fontSize: 15,fontFamily: 'Bit',),))
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.height*0.08,
+                                width: MediaQuery.of(context).size.width*0.4,
+                                child: MaterialButton(
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    },
+                                  child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
+                                ),
+                              )
                             ],
                           ),
                         )
@@ -326,14 +366,20 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                            height: MediaQuery.of(context).size.height/100*8,
                             child: Center(child: Center(child: Text("확인",style: TextStyle(fontFamily: 'Bit',color: Colors.white,fontSize: 20),)),),
                           ),
-                          onPressed: (){
+                          onPressed: ()async{
+                            final firebaseStorageRef = storage.ref().child('manhole').child('${current_latitude},${current_longitude}.png');
+                            final uploadTask = firebaseStorageRef.putFile(
+                                File(widget.imagePath)
+                            );
+                            await uploadTask.whenComplete(() => null);
+                            url= await firebaseStorageRef.getDownloadURL();
                             setState(() {
                               currentTap=0;
                             });
-                            add_marker("사진 이름",widget.imagePath);
+                            add_marker("${current_latitude},${current_longitude}",widget.imagePath,url);
                            Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => map_page(),
+                                builder: (context) => map_page(marker: widget.markers,),
                               ),
                             );
                           },

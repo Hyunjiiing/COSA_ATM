@@ -59,7 +59,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => map_page()));
+                                  builder: (context) => map_page(marker: widget.marker,)));
                         });
                       },
                       child: Column(
@@ -268,7 +268,7 @@ class _BottomBarState extends State<BottomBar> {
                   currentTap=0;
                   Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=>map_page())
+                          MaterialPageRoute(builder: (context)=>map_page(marker: widget.marker,))
                       );
                 });
               },

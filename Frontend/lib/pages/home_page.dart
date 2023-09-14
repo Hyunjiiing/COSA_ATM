@@ -67,7 +67,7 @@ class Home extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  // Handle the button press here
+                  Navigator.pop(context);// Handle the button press here
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xffFF6D6D),

@@ -33,13 +33,7 @@ class InventoryScreen extends StatefulWidget {
 }
 
 class _InventoryScreenState extends State<InventoryScreen> {
-  bool showItems = true;
-
-  void _toggleItems() {
-    setState(() {
-      showItems = !showItems;
-    });
-  }
+  int showItems = 0;
 
   final List<String> itemNames = [
     '게임아이템 3회 뽑기권',
@@ -140,7 +134,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              _toggleItems();
+                              setState(() {
+                                showItems=0;
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -148,7 +144,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                   topLeft: Radius.circular(13),
                                   topRight: Radius.circular(13),
                                 ),
-                                color: showItems
+                                color: showItems==0
                                     ? Color(0xFFFFCD4A)
                                     : Color(0xFFFFCD4A).withOpacity(0.5),
                               ),
@@ -159,7 +155,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                   Text(
                                     '내 아이템',
                                     style: TextStyle(
-                                      color: showItems
+                                      color: showItems==0
                                           ? Colors.black
                                           : Colors.grey,
                                       fontSize: 17,
@@ -172,7 +168,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              _toggleItems();
+                              setState(() {
+                                showItems=1;
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -180,7 +178,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                   topRight: Radius.circular(13),
                                   topLeft: Radius.circular(13),
                                 ),
-                                color: !showItems
+                                color: showItems==1
                                     ? Color(0xFFFFCD4A)
                                     : Color(0xFFFFCD4A).withOpacity(0.5),
                               ),
@@ -191,7 +189,41 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                   Text(
                                     '내 캐릭터',
                                     style: TextStyle(
-                                      color: !showItems
+                                      color: showItems==1
+                                          ? Colors.black
+                                          : Colors.grey,
+                                      fontSize: 17,
+                                      letterSpacing: -1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showItems=2;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(13),
+                                  topLeft: Radius.circular(13),
+                                ),
+                                color: showItems==2
+                                    ? Color(0xFFFFCD4A)
+                                    : Color(0xFFFFCD4A).withOpacity(0.5),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 25, vertical: 9),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '꾸미기',
+                                    style: TextStyle(
+                                      color: showItems==2
                                           ? Colors.black
                                           : Colors.grey,
                                       fontSize: 17,
@@ -215,7 +247,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: showItems
+                            child: showItems==0
                                 ? GridView.builder(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
@@ -422,95 +454,187 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                       );
                                     },
                                   )
-                                : GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 6.0,
-                                      mainAxisSpacing: 6.0,
-                                    ),
-                                    itemCount: 7,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Container(
-                                          color: Colors.grey[200],
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(height: 3),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 8),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey[350],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  child: Image.asset(
-                                                    catImagePaths[index],
-                                                    width: 60,
-                                                    height: 60,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: 3),
-                                              Text(
-                                                catNames[index],
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                              SizedBox(height: 3),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SizedBox(width: 8),
-                                                  Container(
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        // 사용하기 버튼이 눌렸을 때 실행되는 코드 작성
-                                                      },
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            Color(0xFFFFCD4A),
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        minimumSize:
-                                                            Size(72, 32),
-                                                      ),
-                                                      child: Text(
-                                                        '장착하기',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 8),
-                                                ],
-                                              )
-                                            ],
+                                : showItems==1 ?
+                                    GridView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 6.0,
+                                mainAxisSpacing: 6.0,
+                              ),
+                              itemCount: 7,
+                              itemBuilder:
+                                  (BuildContext context, int index) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    color: Colors.grey[200],
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(height: 3),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[350],
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  8),
+                                            ),
+                                            child: Image.asset(
+                                              catImagePaths[index],
+                                              width: 60,
+                                              height: 60,
+                                            ),
                                           ),
                                         ),
-                                      );
-                                    },
-                                  )),
+                                        SizedBox(height: 3),
+                                        Text(
+                                          catNames[index],
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        SizedBox(height: 3),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            SizedBox(width: 8),
+                                            Container(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  // 사용하기 버튼이 눌렸을 때 실행되는 코드 작성
+                                                },
+                                                style: ElevatedButton
+                                                    .styleFrom(
+                                                  backgroundColor:
+                                                  Color(0xFFFFCD4A),
+                                                  shape:
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(8),
+                                                  ),
+                                                  minimumSize:
+                                                  Size(72, 32),
+                                                ),
+                                                child: Text(
+                                                  '장착하기',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 8),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                                            :
+                                    GridView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 6.0,
+                                mainAxisSpacing: 6.0,
+                              ),
+                              itemCount: 7,
+                              itemBuilder:
+                                  (BuildContext context, int index) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    color: Colors.grey[200],
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(height: 3),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[350],
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  8),
+                                            ),
+                                            child: Image.asset(
+                                              catImagePaths[index],
+                                              width: 60,
+                                              height: 60,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 3),
+                                        Text(
+                                          catNames[index],
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        SizedBox(height: 3),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            SizedBox(width: 8),
+                                            Container(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  // 사용하기 버튼이 눌렸을 때 실행되는 코드 작성
+                                                },
+                                                style: ElevatedButton
+                                                    .styleFrom(
+                                                  backgroundColor:
+                                                  Color(0xFFFFCD4A),
+                                                  shape:
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(8),
+                                                  ),
+                                                  minimumSize:
+                                                  Size(72, 32),
+                                                ),
+                                                child: Text(
+                                                  '장착하기',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 8),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                        ),
                       ),
                     ),
                   ],

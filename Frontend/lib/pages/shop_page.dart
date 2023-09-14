@@ -316,8 +316,7 @@ class _shop_pageState extends State<shop_page> {
                             ],
                           )
                               :
-                          Container()
-                        ;
+                          Container();
                       }
                   ),
                 )
@@ -411,7 +410,7 @@ class _shop_pageState extends State<shop_page> {
                           child: Container(
                               width: MediaQuery.of(context).size.width/100*40,
                               height: MediaQuery.of(context).size.height/100*17,
-                              child: Image.asset("assets/images/drawingButton_nomal.png",fit: BoxFit.contain,)
+                              child: Image.asset("assets/images/button2.gif",fit: BoxFit.contain,)
                           ),
                         )
                       ],

@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:typed_data';
-
 import 'package:circular_menu/circular_menu.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/camera_page.dart';
-import 'package:cosa_atm/testPage.dart';
+import 'package:cosa_atm/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:ui' as ui;
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:camera/camera.dart';
 
@@ -28,11 +27,43 @@ List<String> quest_reward =[
   "200",
 ];
 
+List<String> quest_clear =[
+  "3",
+  "3",
+  "1",
+  "3",
+];
 
-List<Marker> _markers = [];
+List<String> quest_name =[
+  "quest1",
+  "quest2",
+  "quest3",
+  "quest4",
+];
+
+Map<dynamic,String> mainCharacter = {
+  "character1":"assets/images/character1.png",
+  "character2":"assets/images/character2.png",
+  "character3":"assets/images/character3.png",
+  "character4":"assets/images/character4.png",
+  "character5":"assets/images/character5.png",
+  "character6":"assets/images/character6.png",
+  "character7":"assets/images/character7.png",
+};
+
+Map<String,dynamic> quest_current={};
+
+List<dynamic>? user_mainCharacter;
+String user_name="";
+int user_money=0;
+
 
 class map_page extends StatefulWidget {
-  const map_page({Key? key}) : super(key: key);
+  const map_page({
+    required this.marker,
+  });
+
+  final List<Marker> marker;
 
   @override
   State<map_page> createState() => _map_pageState();
@@ -68,12 +99,31 @@ Future<Uint8List> getBytesFromAsset(String path, int width) async {
       .asUint8List();
 }
 
+void getUserInfo() async {
+  final documentSnapshot = await FirebaseFirestore.instance
+      .collection("User")
+      .doc("YlKcdF67V6WGeFUmNhcQFuv5NrE3")
+      .get();
+
+  user_money=documentSnapshot.get("money");
+  user_name=documentSnapshot.get("name");
+  user_mainCharacter=documentSnapshot.data()?["character"];
+
+
+  if (documentSnapshot.exists) {
+    quest_current = documentSnapshot.data()?["quest"];
+  } else {
+    // 문서가 존재하지 않는 예외처리
+  }
+}
+
 class _map_pageState extends State<map_page> {
   Completer<GoogleMapController> _controller = Completer();
 
 
   @override
   void initState() {
+    getUserInfo();
     _getPosition();
   }
 
@@ -104,29 +154,15 @@ class _map_pageState extends State<map_page> {
                     actionsPadding: EdgeInsets.zero,
                     contentPadding: EdgeInsets.zero,
                     content: Container(
+                      margin: EdgeInsets.only(top: 15),
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height/100*70,
                       child: Column(
                         children: [
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: MaterialButton(
-                                padding: EdgeInsets.zero,
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.grey
-                                  ),
-                                  child: Icon(Icons.close),
-                                ),
-                                onPressed: (){
-                                  Navigator.of(context).pop();
-                                }
-                            ),
+                          Align(alignment: Alignment.topCenter,child: Text("Rankings",style: TextStyle(fontFamily: "Bit",fontSize: 40),),),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height/100*1,
                           ),
-                          Align(alignment: Alignment.topCenter,child: Text("Rankings",style: TextStyle(fontSize: 40),),),
                           Row(
                             children: [
                               SizedBox(width: MediaQuery.of(context).size.width/100*7,),
@@ -150,7 +186,7 @@ class _map_pageState extends State<map_page> {
                                 ),
                               ),
                               MaterialButton(
-                                padding: EdgeInsets.zero,
+                                padding: EdgeInsets.all(0),
                                 onPressed: (){
                                   setState(() {
                                     lankingTab=1;
@@ -175,22 +211,22 @@ class _map_pageState extends State<map_page> {
                             child: Column(
                               children: [
                                 Container(
+                                  width: MediaQuery.of(context).size.width/100*59,
                                   margin: EdgeInsets.only(top: 20),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("순위",style: TextStyle(color: Colors.grey,fontSize: 16),),
                                       Text("닉네임",style: TextStyle(color: Colors.grey,fontSize: 16),),
-                                      Text("점수",style: TextStyle(color: Colors.grey,fontSize: 16),),
+                                      Text("점수  ",style: TextStyle(color: Colors.grey,fontSize: 16),),
                                     ],
                                   ),
                                 ),
                                 Container(
-                                    margin: EdgeInsets.only(top: 10),
                                     child: Column(
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width/100*60,
+                                          width: MediaQuery.of(context).size.width/100*70,
                                           height: MediaQuery.of(context).size.height/100*30,
                                           child: ListView.builder(
                                               itemCount: 5,
@@ -242,7 +278,7 @@ class _map_pageState extends State<map_page> {
                                         ),
                                         Icon(Icons.more_vert,size: 100,color: Colors.grey[300],),
                                         Container(
-                                          width: MediaQuery.of(context).size.width/100*60,
+                                          width: MediaQuery.of(context).size.width/100*70,
                                           height: MediaQuery.of(context).size.height/100*6,
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(10),
@@ -295,6 +331,7 @@ class _map_pageState extends State<map_page> {
         ),
         CircularMenuItem(
           onTap: (){
+            print(quest_current);
             showDialog(
                 context: context,
                 barrierDismissible: true,
@@ -305,69 +342,102 @@ class _map_pageState extends State<map_page> {
                     contentPadding: EdgeInsets.zero,
                     content: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height/100*40,
+                      height: MediaQuery.of(context).size.height/100*60,
                       child: Column(
                         children: [
-                          Container(margin: EdgeInsets.only(top: 5,bottom: 5),child: Align(alignment: Alignment.topCenter,child: Text("일일 퀘스트",style: TextStyle(fontFamily: 'Bit',fontSize: 25,),),)),
+                          Container(margin: EdgeInsets.only(top: 10),child: Align(alignment: Alignment.topCenter,child: Text("일일 퀘스트",style: TextStyle(fontFamily: 'Bit',fontSize: 25,),),)),
                           Container(
                             width: MediaQuery.of(context).size.width/100*70,
-                            height: MediaQuery.of(context).size.height/100*35,
-                            child: ListView.builder(
-                              itemCount: 4,
-                              itemBuilder: (BuildContext ctx, int idx) {
-                                return Container(
-                                  margin: EdgeInsets.only(top: 10,bottom: 10),
-                                  height: MediaQuery.of(context).size.height/100*6,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("${quest[idx]}",style: TextStyle(fontSize: 17,fontFamily: 'Bit'),),
-                                        Container(
-                                          child:Container(
-                                            child: Row(
+                            height: MediaQuery.of(context).size.height/100*55,
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width/100*70,
+                                  height: MediaQuery.of(context).size.height/100*50,
+                                  child: ListView.builder(
+                                      itemCount: 4,
+                                      itemBuilder: (BuildContext ctx, int idx) {
+                                        return Container(
+                                          margin: EdgeInsets.only(top: 10,bottom: 10),
+                                          height: MediaQuery.of(context).size.height/100*10,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.withOpacity(0.3),
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(top: 8.0,left: 8,right: 8),
+                                            child: Column(
                                               children: [
-                                                Container(
-                                                  width: MediaQuery.of(context).size.width/100*15,
-                                                  height: MediaQuery.of(context).size.height/100*4,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black.withOpacity(0.5),
-                                                    borderRadius: BorderRadius.circular(10),
-                                                  ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 15.0,right: 15),
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
                                                     children: [
-                                                      Text("${quest_reward[idx]}",style: TextStyle(color: Colors.white),),
-                                                      Icon(Icons.currency_bitcoin,color: Colors.yellow,),
+                                                      Text("${quest[idx]}",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                                      Text("${quest_current[quest_name[idx]]}/${quest_clear[idx]}",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),)
                                                     ],
                                                   ),
                                                 ),
-                                                MaterialButton(
-                                                  onPressed: (){},
-                                                  child: Container(
-                                                      width: MediaQuery.of(context).size.width/100*15,
-                                                      height: MediaQuery.of(context).size.height/100*4,
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xffFFB156),
-                                                      borderRadius: BorderRadius.circular(10),
-                                                    ),
-                                                    child: Center(child: Text("받기",style: TextStyle(fontSize: 15,color: Colors.white,fontFamily: 'Bit'),)),
-                                                  )
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 15.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width/100*20,
+                                                        height: MediaQuery.of(context).size.height/100*3.5,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.black.withOpacity(0.5),
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        ),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                          children: [
+                                                            Text("${quest_reward[idx]}",style: TextStyle(color: Colors.white),),
+                                                            Image.asset("assets/images/dollar.png"),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      MaterialButton(
+                                                          onPressed: (){
+                                                            print(quest_current[quest_name[idx]]);
+                                                            print(quest_clear[idx]);
+                                                          },
+                                                          child: Container(
+                                                            width: MediaQuery.of(context).size.width/100*30,
+                                                            height: MediaQuery.of(context).size.height/100*3.5,
+                                                            decoration: BoxDecoration(
+                                                              color: quest_current[quest_name[idx]].toString() == quest_clear[idx].toString() ? Color(0xffFFB156) : Colors.grey,
+                                                              borderRadius: BorderRadius.circular(10),
+                                                            ),
+                                                            child: quest_current[quest_name[idx]].toString() == quest_clear[idx].toString() ?
+                                                              Center(child: Text("보상 받기",style: TextStyle(fontSize: 15,color: Colors.white,fontFamily: 'Bit'),))
+                                                                                                    :
+                                                              Center(child: Text("진행중",style: TextStyle(fontSize: 15,color: Colors.white,fontFamily: 'Bit'),)),
+                                                          )
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                        )
-                                      ],
-                                    ),
+                                        );
+                                      }
                                   ),
-                                );
-                              }
+                                ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height/100*5,
+                                  width: MediaQuery.of(context).size.width*0.3,
+                                  child: MaterialButton(
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    },
+                                    child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
@@ -391,7 +461,7 @@ class _map_pageState extends State<map_page> {
         ),
         CircularMenuItem(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>testPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
           },
           icon: Icons.flaky,
           iconColor: Color(0xffFFB156),
@@ -418,7 +488,7 @@ class _map_pageState extends State<map_page> {
               mapType: MapType.normal,
               zoomControlsEnabled: false,
               myLocationEnabled: true,
-              markers: Set.from(_markers),
+              markers: Set.from(widget.marker),
               initialCameraPosition: CameraPosition(
                   target: LatLng(current_latitude,current_longitude),
               ),
@@ -455,18 +525,41 @@ class _map_pageState extends State<map_page> {
                         Column(
                           children: [
                             Icon(Icons.account_circle,color: Colors.white,size: 40,),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height/100*1.4,
+                            ),
                             Container(
                               width: MediaQuery.of(context).size.width/100*15,
-                              height: MediaQuery.of(context).size.height/100*2.5,
+                              height: MediaQuery.of(context).size.height/100*2,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              child: Center(child: Text("LeeDY",style: TextStyle(fontSize: 10),)),
+                              child: Center(child: Text("${user_name}",style: TextStyle(fontSize: 10,fontFamily: 'Bit'),)),
                             )
                           ],
                         ),
-                        Icon(Icons.pets,size: 55,color: Colors.white,),
+                        Container(
+                          width: MediaQuery.of(context).size.width/100*16,
+                          height: MediaQuery.of(context).size.height/100*10,
+                          child: Column(
+                            children: [
+                              Image.asset("${mainCharacter[user_mainCharacter?[0]["key"]]}",fit: BoxFit.contain,),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height/100*0.5,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width/100*15,
+                                height: MediaQuery.of(context).size.height/100*2,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Center(child: Text("${user_mainCharacter?[0]["name"]}",style: TextStyle(fontSize: 10,fontFamily: 'Bit'),)),
+                              )
+                            ],
+                          ),
+                        ),
                         Container(
                           width: MediaQuery.of(context).size.width/100*30,
                           height: MediaQuery.of(context).size.height/100*10,
@@ -482,10 +575,10 @@ class _map_pageState extends State<map_page> {
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.currency_bitcoin,color: Colors.yellow,),
+                                    Image.asset("assets/images/dollar.png"),
                                     Container(
                                         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width/100*4),
-                                        child: Text("1240W",style: TextStyle(color: Colors.white),)
+                                        child: Text("${user_money}",style: TextStyle(color: Colors.white),)
                                     )
                                   ],
                                 ),
@@ -504,7 +597,7 @@ class _map_pageState extends State<map_page> {
                                       Icon(Icons.leaderboard,color: Colors.yellow,),
                                       Container(
                                           margin: EdgeInsets.only(left: MediaQuery.of(context).size.width/100*4),
-                                          child: Text("LV.1",style: TextStyle(color: Colors.white),)
+                                          child: Text("LV.${user_mainCharacter?[0]["level"]}",style: TextStyle(color: Colors.white),)
                                       )
                                     ],
                                   ),
@@ -558,7 +651,7 @@ class _map_pageState extends State<map_page> {
             circularMenu
           ],
         ),
-        bottomNavigationBar: MapBottomBar(marker: _markers,),
+        bottomNavigationBar: MapBottomBar(marker: widget.marker,),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: MaterialButton(
           child: Container(
@@ -574,7 +667,7 @@ class _map_pageState extends State<map_page> {
             _getPosition();
             final cameras = await availableCameras();
             final firstCamera = cameras.first;
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>camera_page(camera: firstCamera,marker: _markers,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>camera_page(camera: firstCamera,marker: widget.marker,)));
           },
         ),
       ),
@@ -591,7 +684,5 @@ class _map_pageState extends State<map_page> {
             )
         )
     );
-    print(current_latitude);
-    print(current_longitude);
   }
 }

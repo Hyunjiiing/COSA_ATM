@@ -753,7 +753,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                 ),
                               );
                             },
-                          )),
+                          )
+                      ),
                     ),
                   ),
                 ],
@@ -762,7 +763,6 @@ class _InventoryScreenState extends State<InventoryScreen> {
           ],
         ),
       ),
-
         bottomNavigationBar: BottomBar(marker: widget.marker,)
     );
   }

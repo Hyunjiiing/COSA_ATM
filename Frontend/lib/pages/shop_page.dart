@@ -406,7 +406,48 @@ class _shop_pageState extends State<shop_page> {
                             child: Image.asset("assets/images/drawingMachine.png",fit: BoxFit.contain,)
                         ),
                         MaterialButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              showDialog(context: context,
+                              barrierDismissible: true,
+                              builder: (BuildContext context){
+                                return AlertDialog(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                actionsPadding: EdgeInsets.zero,
+                                contentPadding: EdgeInsets.zero,
+                                content: Container(
+                                  width: MediaQuery.of(context).size.width/100*90,
+                                  height: MediaQuery.of(context).size.height/100*20,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width/100*34,
+                                        height: MediaQuery.of(context).size.height/100*17,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                          color: Colors.redAccent
+                                        ),
+                                        child: Center(
+                                          child: Text("치장템 뽑기",style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Bit'),),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width/100*34,
+                                        height: MediaQuery.of(context).size.height/100*17,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.blueAccent
+                                        ),
+                                        child: Center(
+                                          child: Text("캐릭터 뽑기",style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Bit'),),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                );
+                              });
+                            },
                           child: Container(
                               width: MediaQuery.of(context).size.width/100*40,
                               height: MediaQuery.of(context).size.height/100*17,

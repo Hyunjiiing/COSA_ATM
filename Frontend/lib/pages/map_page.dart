@@ -165,7 +165,7 @@ class _map_pageState extends State<map_page> {
                             height: MediaQuery.of(context).size.height/100*1,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               MaterialButton(
                                 padding: EdgeInsets.zero,
@@ -187,7 +187,6 @@ class _map_pageState extends State<map_page> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: MediaQuery.of(context).size.width/100*3,),
                               MaterialButton(
                                 padding: EdgeInsets.zero,
                                 minWidth: MediaQuery.of(context).size.width/100*20,
@@ -208,7 +207,6 @@ class _map_pageState extends State<map_page> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: MediaQuery.of(context).size.width/100*7,),
                             ],
                           ),
                           lankingTab==0 ?
@@ -231,7 +229,7 @@ class _map_pageState extends State<map_page> {
                                     child: Column(
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width/100*70,
+                                          width: MediaQuery.of(context).size.width/100*68,
                                           height: MediaQuery.of(context).size.height/100*30,
                                           child: ListView.builder(
                                               itemCount: 5,
@@ -303,30 +301,124 @@ class _map_pageState extends State<map_page> {
                                             ],
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: MediaQuery.of(context).size.height/100*1,
-                                        ),
                                       ],
                                     )
                                 ),
-                                Container(
-                                  height: MediaQuery.of(context).size.height/100*6,
-                                  width: MediaQuery.of(context).size.width*0.3,
-                                  child: MaterialButton(
-                                    onPressed: (){
-                                      Navigator.pop(context);
-                                    },
-                                    child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
-                                  ),
-                                )
                               ],
                             ),
                           )
                               :
                           Container(
-                            width: MediaQuery.of(context).size.width/100*60,
-                            height: MediaQuery.of(context).size.height/100*30,
-                            color: Colors.red,
+                            width: MediaQuery.of(context).size.width/100*70,
+                            height: MediaQuery.of(context).size.height/100*50,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  "assets/images/namhan.jpg",
+                                  width: MediaQuery.of(context).size.width/100*70,
+                                  height: MediaQuery.of(context).size.height/100*50,
+                                  fit: BoxFit.cover,
+                                ),
+                                Positioned(
+                                  top: MediaQuery.of(context).size.height/100*10,
+                                    left: MediaQuery.of(context).size.width/100*20,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("경기도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("204",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),)
+                                      ],
+                                    )
+                                ),
+                                Positioned(
+                                    top: MediaQuery.of(context).size.height/100*8,
+                                    right: MediaQuery.of(context).size.width/100*22,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("강원도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("108",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),)
+                                      ],
+                                    )
+                                ),
+                                Positioned(
+                                    top: MediaQuery.of(context).size.height/100*20,
+                                    left: MediaQuery.of(context).size.width/100*14,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("충청남도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("129",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),),
+                                      ],
+                                    )
+                                ),
+                                Positioned(
+                                    top: MediaQuery.of(context).size.height/100*17,
+                                    left: MediaQuery.of(context).size.width/100*28,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("충청북도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("193",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),),
+                                      ],
+                                    )
+                                ),
+                                Positioned(
+                                    top: MediaQuery.of(context).size.height/100*21,
+                                    right: MediaQuery.of(context).size.width/100*13,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("경상북도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("167",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),),
+                                      ],
+                                    )
+                                ),
+                                Positioned(
+                                    top: MediaQuery.of(context).size.height/100*29.7,
+                                    right: MediaQuery.of(context).size.width/100*18,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("경상남도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("208",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),),
+                                      ],
+                                    )
+                                ),
+                                Positioned(
+                                    top: MediaQuery.of(context).size.height/100*27,
+                                    left: MediaQuery.of(context).size.width/100*19,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("전라북도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("98",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),),
+                                      ],
+                                    )
+                                ),
+                                Positioned(
+                                    top: MediaQuery.of(context).size.height/100*33.5,
+                                    left: MediaQuery.of(context).size.width/100*15,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("전라남도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
+                                        Text("142",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),),
+                                      ],
+                                    )
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height/100*6,
+                            width: MediaQuery.of(context).size.width*0.3,
+                            child: MaterialButton(
+                              onPressed: (){
+                                Navigator.pop(context);
+                              },
+                              child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
+                            ),
                           ),
                         ],
                       ),

@@ -60,8 +60,9 @@ class _PetScreenState extends State<PetScreen> {
           List<dynamic> li = snapshot.data![0]["character"];
 
           for(int i = 0; i < li.length; i++) {
-            if (snapshot.data![0]["select"] == li[i]["name"]){
-              index = i; break;
+            if (snapshot.data![0]["select"] == li[i]["key"]){
+              index = i;
+              break;
             }
           }
 
@@ -70,6 +71,7 @@ class _PetScreenState extends State<PetScreen> {
             var data = doc.data()! as Map<String, dynamic>;
             if (data['name'] == snapshot.data![0]['select']) {
               rank = data['grade'];
+              print("1");
             }
           });
 
@@ -429,7 +431,6 @@ class _PetScreenState extends State<PetScreen> {
                                                                                             .then((value) => print("User Updated"))
                                                                                             .catchError((error) => print("Failed to update user: $error"));
                                                                                       });
-
                                                                                     }
                                                                                     break;
                                                                                   case 1:
@@ -480,7 +481,8 @@ class _PetScreenState extends State<PetScreen> {
                                                                                   "받기",
                                                                                   style: TextStyle(fontSize: 15, color: Colors.white, fontFamily: 'Bit'),
                                                                                 )),
-                                                                              )),
+                                                                              )
+                                                                          ),
                                                                         ],
                                                                       ),
                                                                     ),
@@ -503,12 +505,14 @@ class _PetScreenState extends State<PetScreen> {
                                         width: 55,
                                         height: 55,
                                         child: Image.asset(
-                                            "assets/images/quest.png"),
+                                            "assets/images/quest.png"
+                                        ),
                                       ),
                                       Text(
                                         '일일 퀘스트',
                                         style: TextStyle(
-                                            fontSize: 18, fontFamily: 'Bit'),
+                                            fontSize: 18, fontFamily: 'Bit'
+                                        ),
                                       ),
                                     ],
                                   ),

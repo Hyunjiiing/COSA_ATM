@@ -165,17 +165,18 @@ class _map_pageState extends State<map_page> {
                             height: MediaQuery.of(context).size.height/100*1,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              SizedBox(width: MediaQuery.of(context).size.width/100*7,),
                               MaterialButton(
                                 padding: EdgeInsets.zero,
+                                minWidth: MediaQuery.of(context).size.width/100*20,
                                 onPressed: (){
                                   setState(() {
                                     lankingTab=0;
                                   });
                                 },
                                 child: Container(
-                                  width:MediaQuery.of(context).size.width/100*15,
+                                  width:MediaQuery.of(context).size.width/100*20,
                                   height: MediaQuery.of(context).size.height/100*4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -186,15 +187,17 @@ class _map_pageState extends State<map_page> {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: MediaQuery.of(context).size.width/100*3,),
                               MaterialButton(
-                                padding: EdgeInsets.all(0),
+                                padding: EdgeInsets.zero,
+                                minWidth: MediaQuery.of(context).size.width/100*20,
                                 onPressed: (){
                                   setState(() {
                                     lankingTab=1;
                                   });
                                 },
                                 child: Container(
-                                  width:MediaQuery.of(context).size.width/100*15,
+                                  width:MediaQuery.of(context).size.width/100*20,
                                   height: MediaQuery.of(context).size.height/100*4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -205,6 +208,7 @@ class _map_pageState extends State<map_page> {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: MediaQuery.of(context).size.width/100*7,),
                             ],
                           ),
                           lankingTab==0 ?
@@ -277,7 +281,7 @@ class _map_pageState extends State<map_page> {
                                               }
                                           ),
                                         ),
-                                        Icon(Icons.more_vert,size: 100,color: Colors.grey[300],),
+                                        Icon(Icons.more_vert,size: 70,color: Colors.grey[300],),
                                         Container(
                                           width: MediaQuery.of(context).size.width/100*70,
                                           height: MediaQuery.of(context).size.height/100*6,
@@ -298,9 +302,22 @@ class _map_pageState extends State<map_page> {
                                               Text("점수")
                                             ],
                                           ),
-                                        )
+                                        ),
+                                        SizedBox(
+                                          height: MediaQuery.of(context).size.height/100*1,
+                                        ),
                                       ],
                                     )
+                                ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height/100*6,
+                                  width: MediaQuery.of(context).size.width*0.3,
+                                  child: MaterialButton(
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    },
+                                    child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
+                                  ),
                                 )
                               ],
                             ),
@@ -401,8 +418,7 @@ class _map_pageState extends State<map_page> {
                                                       ),
                                                       MaterialButton(
                                                           onPressed: (){
-                                                            print(quest_current[quest_name[idx]]);
-                                                            print(quest_clear[idx]);
+
                                                           },
                                                           child: Container(
                                                             width: MediaQuery.of(context).size.width/100*30,

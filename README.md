@@ -12,15 +12,17 @@
 -----
 
 ## 설치방법
-본 프로젝트를 다운받고 아래의 항목 설치
-```
-응애
-```
+apk파일 실행
 
 ## 로컬서버실행
-로컬로 서버 실행 시 새로운 가상환경 실행 후 requirements.txt 다운로드(아래 명령어 실행)!
+가상환경 생성(파이썬버전주의)
 ```
-$ pip install -r requirements.txt
+$ conda create -n [이름] python=3.8
+```
+
+가상환경 activate 후 다운로드(아래 명령어 실행)!
+```
+$ conda env create -f conda_requirements.yaml
 ```
 
 로컬서버 구동
@@ -29,13 +31,11 @@ $ uvicorn main:app --reload
 ```
 
 ## 의존성
-```
-응애
-```
+conda_requirements.yaml
 
 ## 실행화면
 ```
-응애
+ui 사진 올리기
 ```
 
 ----
@@ -55,6 +55,11 @@ $ uvicorn main:app --reload
 ## 모델 구조 (CNN)
 <img width="1246" alt="Screenshot 2023-09-15 at 4 53 49 PM" src="https://github.com/Hyunjiiing/COSA_ATM/assets/128250130/f7650075-fbc4-4cf1-accc-c524578f3490">
 
-
 ----
 ## ETC
+
+개발 기간:
+예선 - 까
+본선 - 먹
+결선 - 음ㅋ
+

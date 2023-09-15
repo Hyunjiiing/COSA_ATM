@@ -120,6 +120,7 @@ void getUserInfo() async {
 
 class _map_pageState extends State<map_page> {
   Completer<GoogleMapController> _controller = Completer();
+  CollectionReference user = FirebaseFirestore.instance.collection('User');
 
 
   @override
@@ -510,7 +511,56 @@ class _map_pageState extends State<map_page> {
                                                       ),
                                                       MaterialButton(
                                                           onPressed: (){
+                                                            switch (idx) {
+                                                              case 0:
+                                                                if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                  print("ok");
+                                                                  setState(() {
+                                                                    user
+                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                        .update({'money': user_money + 100})
+                                                                        .then((value) => print("User Updated"))
+                                                                        .catchError((error) => print("Failed to update user: $error"));
+                                                                    getUserInfo();
+                                                                  });
 
+                                                                }
+                                                                break;
+                                                              case 1:
+                                                                if (quest_current["quest${idx+1}"] == 3) {
+                                                                  setState(() {
+                                                                    user
+                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                        .update({'money': user_money + 100})
+                                                                        .then((value) => print("User Updated"))
+                                                                        .catchError((error) => print("Failed to update user: $error"));
+                                                                  });
+                                                                }
+                                                                break;
+                                                              case 2:
+                                                                if (quest_current["quest${idx+1}"] == 1) {
+                                                                  setState(() {
+                                                                    user
+                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                        .update({'money': user_money + 100})
+                                                                        .then((value) => print("User Updated"))
+                                                                        .catchError((error) => print("Failed to update user: $error"));
+                                                                  });
+                                                                }
+                                                                break;
+                                                              case 3:
+                                                                if (quest_current["quest${idx+1}"]==3) {
+                                                                  //경험치 Up
+                                                                  setState(() {
+                                                                    user
+                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                        .update({'money': user_money + 200})
+                                                                        .then((value) => print("User Updated"))
+                                                                        .catchError((error) => print("Failed to update user: $error"));
+                                                                  });
+                                                                }
+                                                                break;
+                                                            }
                                                           },
                                                           child: Container(
                                                             width: MediaQuery.of(context).size.width/100*30,

@@ -709,33 +709,36 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                             fontSize: 16,
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(height: 3),
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceBetween,
-                                        children: [
-                                          SizedBox(width: 8),
-                                          Container(
-                                            child:
-                                            ElevatedButton(
-                                              onPressed: (itemsCount.isNotEmpty && index+6 >= 6 && index+6 <= 11 && itemsCount[index+6])
-                                                  ? () {
-                                                print("yes");
-                                                // 버튼 클릭 시 실행할 코드
-                                              }
-                                                  :
-                                              (){
-                                                print(index);
-                                                print("no");
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: (index+6 >= 6 && index+6 <= 11 && itemsCount[index+6]==true)
-                                                    ? Color(0xFFFFCD4A)
-                                                    : Colors.grey,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(8),
+                                        SizedBox(height: 3),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            SizedBox(width: 8),
+                                            Container(
+                                              child:
+                                              ElevatedButton(
+                                                onPressed: (itemsCount.isNotEmpty && index+6 >= 6 && index+6 <= 11 && itemsCount[index+6])
+                                                    ? () {
+                                                  print("yes");
+                                                  // 버튼 클릭 시 실행할 코드
+                                                }
+                                                    :
+                                                    (){
+                                                  print(index);
+                                                  print("no");
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: (index+6 >= 6 && index+6 <= 11 && itemsCount[index+6]==true)
+                                                      ? Color(0xFFFFCD4A)
+                                                      : Colors.grey,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                  ),
+                                                  minimumSize:
+                                                  Size(
+                                                      72, 32),
                                                 ),
                                                 child: Text(
                                                   '장착하기',

@@ -376,13 +376,18 @@ class _map_pageState extends State<map_page> {
                                     )
                                 ),
                                 Positioned(
-                                    top: MediaQuery.of(context).size.height/100*29.7,
-                                    right: MediaQuery.of(context).size.width/100*18,
+                                    top: MediaQuery.of(context).size.height/100*26.5,
+                                    right: MediaQuery.of(context).size.width/100*10,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
+                                        Image.asset(
+                                          "assets/images/crown.png",
+                                          width:MediaQuery.of(context).size.height/100*16,
+                                          height: MediaQuery.of(context).size.width/100*8,
+                                        ),
                                         Text("경상남도",style: TextStyle(fontSize: 20,fontFamily: 'Bit'),),
-                                        Text("208",style: TextStyle(fontSize: 15,fontFamily: 'Bit'),),
+                                        Text("208",style: TextStyle(color: Colors.red,fontSize: 20,fontFamily: 'Bit'),),
                                       ],
                                     )
                                 ),
@@ -442,6 +447,7 @@ class _map_pageState extends State<map_page> {
         ),
         CircularMenuItem(
           onTap: (){
+            getUserInfo();
             showDialog(
                 context: context,
                 barrierDismissible: true,
@@ -513,51 +519,74 @@ class _map_pageState extends State<map_page> {
                                                           onPressed: (){
                                                             switch (idx) {
                                                               case 0:
-                                                                if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
-                                                                  print("ok");
-                                                                  setState(() {
-                                                                    user
-                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                        .update({'money': user_money + 100})
-                                                                        .then((value) => print("User Updated"))
-                                                                        .catchError((error) => print("Failed to update user: $error"));
-                                                                    getUserInfo();
-                                                                  });
-
+                                                                if(quest_current["quest${idx+1}_clear"]==false){
+                                                                  if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                    setState(() {
+                                                                      user
+                                                                          .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                          .update({
+                                                                            'money': user_money + 100,
+                                                                            "quest.quest${idx+1}_clear" : true,
+                                                                            "quest.quest4" : quest_current["quest4"]+1,
+                                                                          })
+                                                                          .then((value) => print("User Updated"))
+                                                                          .catchError((error) => print("Failed to update user: $error"));
+                                                                      getUserInfo();
+                                                                    });
+                                                                  }
                                                                 }
                                                                 break;
                                                               case 1:
-                                                                if (quest_current["quest${idx+1}"] == 3) {
-                                                                  setState(() {
-                                                                    user
-                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                        .update({'money': user_money + 100})
-                                                                        .then((value) => print("User Updated"))
-                                                                        .catchError((error) => print("Failed to update user: $error"));
-                                                                  });
+                                                                if(quest_current["quest${idx+1}_clear"]==false){
+                                                                  if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                    setState(() {
+                                                                      user
+                                                                          .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                          .update({
+                                                                        'money': user_money + 100,
+                                                                        "quest.quest${idx+1}_clear" : true,
+                                                                        "quest.quest4" : quest_current["quest4"]+1,
+                                                                      })
+                                                                          .then((value) => print("User Updated"))
+                                                                          .catchError((error) => print("Failed to update user: $error"));
+                                                                      getUserInfo();
+                                                                    });
+                                                                  }
                                                                 }
                                                                 break;
                                                               case 2:
-                                                                if (quest_current["quest${idx+1}"] == 1) {
-                                                                  setState(() {
-                                                                    user
-                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                        .update({'money': user_money + 100})
-                                                                        .then((value) => print("User Updated"))
-                                                                        .catchError((error) => print("Failed to update user: $error"));
-                                                                  });
+                                                                if(quest_current["quest${idx+1}_clear"]==false){
+                                                                  if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                    setState(() {
+                                                                      user
+                                                                          .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                          .update({
+                                                                        'money': user_money + 100,
+                                                                        "quest.quest${idx+1}_clear" : true,
+                                                                        "quest.quest4" : quest_current["quest4"]+1,
+                                                                      })
+                                                                          .then((value) => print("User Updated"))
+                                                                          .catchError((error) => print("Failed to update user: $error"));
+                                                                      getUserInfo();
+                                                                    });
+                                                                  }
                                                                 }
                                                                 break;
                                                               case 3:
-                                                                if (quest_current["quest${idx+1}"]==3) {
-                                                                  //경험치 Up
-                                                                  setState(() {
-                                                                    user
-                                                                        .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                        .update({'money': user_money + 200})
-                                                                        .then((value) => print("User Updated"))
-                                                                        .catchError((error) => print("Failed to update user: $error"));
-                                                                  });
+                                                                if(quest_current["quest${idx+1}_clear"]==false){
+                                                                  if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                    setState(() {
+                                                                      user
+                                                                          .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                          .update({
+                                                                        'money': user_money + 200,
+                                                                        "quest.quest${idx+1}_clear" : true,
+                                                                      })
+                                                                          .then((value) => print("User Updated"))
+                                                                          .catchError((error) => print("Failed to update user: $error"));
+                                                                      getUserInfo();
+                                                                    });
+                                                                  }
                                                                 }
                                                                 break;
                                                             }
@@ -566,10 +595,20 @@ class _map_pageState extends State<map_page> {
                                                             width: MediaQuery.of(context).size.width/100*30,
                                                             height: MediaQuery.of(context).size.height/100*3.5,
                                                             decoration: BoxDecoration(
-                                                              color: quest_current[quest_name[idx]].toString() == quest_clear[idx].toString() ? Color(0xffFFB156) : Colors.grey,
+                                                              color:
+                                                              quest_current[quest_name[idx]].toString() == quest_clear[idx].toString() ?
+                                                                quest_current["quest${idx+1}_clear"]==true?
+                                                                  Color(0xff81C147)
+                                                                        :
+                                                                  Color(0xffFFB156)
+                                                                        :
+                                                                Colors.grey,
                                                               borderRadius: BorderRadius.circular(10),
                                                             ),
                                                             child: quest_current[quest_name[idx]].toString() == quest_clear[idx].toString() ?
+                                                              quest_current["quest${idx+1}_clear"]==true?
+                                                              Center(child: Text("완료",style: TextStyle(fontSize: 15,color: Colors.white,fontFamily: 'Bit'),))
+                                                                                                    :
                                                               Center(child: Text("보상 받기",style: TextStyle(fontSize: 15,color: Colors.white,fontFamily: 'Bit'),))
                                                                                                     :
                                                               Center(child: Text("진행중",style: TextStyle(fontSize: 15,color: Colors.white,fontFamily: 'Bit'),)),

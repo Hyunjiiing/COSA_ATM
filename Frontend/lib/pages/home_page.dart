@@ -24,6 +24,24 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     CollectionReference user = FirebaseFirestore.instance.collection('User');
 
+    void getUserInfo() async {
+      final documentSnapshot = await FirebaseFirestore.instance
+          .collection("User")
+          .doc("YlKcdF67V6WGeFUmNhcQFuv5NrE3")
+          .get();
+
+      user_money=documentSnapshot.get("money");
+      user_name=documentSnapshot.get("name");
+      user_mainCharacter=documentSnapshot.data()?["character"];
+
+
+      if (documentSnapshot.exists) {
+        quest_current = documentSnapshot.data()?["quest"];
+      } else {
+        // 문서가 존재하지 않는 예외처리
+      }
+    }
+
     final sizeX = (MediaQuery.of(context).size.width);
     final sizeY = (MediaQuery.of(context).size.height - 100);
     return Container(
@@ -82,6 +100,7 @@ class Home extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  getUserInfo();
                   Navigator.pop(context);// Handle the button press here
                 },
                 style: ElevatedButton.styleFrom(
@@ -124,7 +143,9 @@ class Home extends StatelessWidget {
                   if (isToday(quest["date"])) {
                     quest['quest1'] = quest['quest2'] = quest['quest3'] = 0;
                   }
-                  quest['quest1'] += 1;
+                  if(quest['quest1']<3){
+                    quest['quest1'] += 1;
+                  }
 
                   user
                       .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')

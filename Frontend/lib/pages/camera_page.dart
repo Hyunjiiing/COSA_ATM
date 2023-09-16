@@ -248,17 +248,35 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     FirebaseStorage storage=FirebaseStorage.instance;
     String url="";
 
-    Future<void> add_marker(String a,String imagePath,String _url)async {
-      final firebaseStorageRef = storage.ref().child('manhole').child('${a}.png');
+    void getUserInfo() async {
+      final documentSnapshot = await FirebaseFirestore.instance
+          .collection("User")
+          .doc("YlKcdF67V6WGeFUmNhcQFuv5NrE3")
+          .get();
+
+      user_money=documentSnapshot.get("money");
+      user_name=documentSnapshot.get("name");
+      user_mainCharacter=documentSnapshot.data()?["character"];
+
+
+      if (documentSnapshot.exists) {
+        quest_current = documentSnapshot.data()?["quest"];
+      } else {
+        // 문서가 존재하지 않는 예외처리
+      }
+    }
+
+    Future<void> add_marker(double lat,double lon,String imagePath,String _url)async {
+      final firebaseStorageRef = storage.ref().child('manhole').child('$lat,$lon.png');
       url= await firebaseStorageRef.getDownloadURL();
 
       widget.markers.add(
           Marker(
-              markerId: MarkerId(a),
+              markerId: MarkerId("$lat,$lon"),
               draggable: true,
               position: LatLng(current_latitude,current_longitude),
               onTap: ()async{
-                List<Placemark> placemarks = await placemarkFromCoordinates(current_latitude, current_longitude);
+                List<Placemark> placemarks = await placemarkFromCoordinates(lat,lon);
                 String locality="${placemarks[0].locality}";
                 String subLocality="${placemarks[0].subLocality}";
                 String thoroughfare="${placemarks[0].thoroughfare}";
@@ -269,7 +287,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                       "address": "${address}",
                       "lat": "${current_latitude}",
                       "lon": "${current_longitude}",
-                      "name": "$a"
+                      "name": "$lat,$lon"
                     }
                 );
                 showDialog(
@@ -380,8 +398,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                             setState(() {
                               currentTap=0;
                             });
-                            add_marker("${current_latitude},${current_longitude}",widget.imagePath,url);
-
+                            add_marker(current_latitude,current_longitude,widget.imagePath,url);
+                            getUserInfo();
                             DocumentSnapshot userInfo = await user.doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3').get();
                             Map<String, dynamic> data = userInfo.data()! as Map<String, dynamic>;
                             List<dynamic> li = data["character"];
@@ -403,7 +421,9 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                             if (isToday(quest["date"])) {
                               quest['quest1'] = quest['quest2'] = quest['quest3'] = 0;
                             }
-                            quest['quest2'] += 1;
+                            if(quest['quest2']<3){
+                              quest['quest2'] += 1;
+                            }
 
                             user
                                 .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')

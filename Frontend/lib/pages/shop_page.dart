@@ -425,7 +425,7 @@ class _shop_pageState extends State<shop_page> {
                                         height: MediaQuery.of(context).size.height/100*17,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(20),
-                                          color: Colors.redAccent
+                                          color: Colors.green
                                         ),
                                         child: Center(
                                           child: Text("치장템 뽑기",style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Bit'),),
@@ -436,7 +436,7 @@ class _shop_pageState extends State<shop_page> {
                                         height: MediaQuery.of(context).size.height/100*17,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(20),
-                                            color: Colors.blueAccent
+                                            color: Color(0xFFFFCD4A)
                                         ),
                                         child: Center(
                                           child: Text("캐릭터 뽑기",style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Bit'),),

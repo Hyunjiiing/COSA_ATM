@@ -1,19 +1,14 @@
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/inventory_page.dart';
 import 'package:cosa_atm/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 
 class PetPage extends StatelessWidget {
   final List<Marker> marker;
@@ -71,6 +66,7 @@ void getUserInfo() async {
     quest_current = documentSnapshot.data()?["quest"];
   } else {
   }
+  print("end");
 }
 
 
@@ -400,51 +396,74 @@ class _PetScreenState extends State<PetScreen> {
                                                                               onPressed: (){
                                                                                 switch (idx) {
                                                                                   case 0:
-                                                                                    if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
-                                                                                      print("ok");
-                                                                                      setState(() {
-                                                                                        user
-                                                                                            .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                                            .update({'money': user_money + 100})
-                                                                                            .then((value) => print("User Updated"))
-                                                                                            .catchError((error) => print("Failed to update user: $error"));
-                                                                                        getUserInfo();
-                                                                                      });
-
+                                                                                    if(quest_current["quest${idx+1}_clear"]==false){
+                                                                                      if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                                        setState(() {
+                                                                                          user
+                                                                                              .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                                              .update({
+                                                                                            'money': user_money + 100,
+                                                                                            "quest.quest${idx+1}_clear" : true,
+                                                                                            "quest.quest4" : quest_current["quest4"]+1,
+                                                                                          })
+                                                                                              .then((value) => print("User Updated"))
+                                                                                              .catchError((error) => print("Failed to update user: $error"));
+                                                                                          getUserInfo();
+                                                                                        });
+                                                                                      }
                                                                                     }
                                                                                     break;
                                                                                   case 1:
-                                                                                    if (quest_current["quest${idx+1}"] == 3) {
-                                                                                      setState(() {
-                                                                                        user
-                                                                                            .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                                            .update({'money': user_money + 100})
-                                                                                            .then((value) => print("User Updated"))
-                                                                                            .catchError((error) => print("Failed to update user: $error"));
-                                                                                      });
+                                                                                    if(quest_current["quest${idx+1}_clear"]==false){
+                                                                                      if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                                        setState(() {
+                                                                                          user
+                                                                                              .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                                              .update({
+                                                                                            'money': user_money + 100,
+                                                                                            "quest.quest${idx+1}_clear" : true,
+                                                                                            "quest.quest4" : quest_current["quest4"]+1,
+                                                                                          })
+                                                                                              .then((value) => print("User Updated"))
+                                                                                              .catchError((error) => print("Failed to update user: $error"));
+                                                                                          getUserInfo();
+                                                                                        });
+                                                                                      }
                                                                                     }
                                                                                     break;
                                                                                   case 2:
-                                                                                    if (quest_current["quest${idx+1}"] == 1) {
-                                                                                      setState(() {
-                                                                                        user
-                                                                                            .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                                            .update({'money': user_money + 100})
-                                                                                            .then((value) => print("User Updated"))
-                                                                                            .catchError((error) => print("Failed to update user: $error"));
-                                                                                      });
+                                                                                    if(quest_current["quest${idx+1}_clear"]==false){
+                                                                                      if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                                        setState(() {
+                                                                                          user
+                                                                                              .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                                              .update({
+                                                                                            'money': user_money + 100,
+                                                                                            "quest.quest${idx+1}_clear" : true,
+                                                                                            "quest.quest4" : quest_current["quest4"]+1,
+                                                                                          })
+                                                                                              .then((value) => print("User Updated"))
+                                                                                              .catchError((error) => print("Failed to update user: $error"));
+                                                                                          getUserInfo();
+                                                                                        });
+                                                                                      }
                                                                                     }
                                                                                     break;
                                                                                   case 3:
-                                                                                    if (quest_current["quest${idx+1}"]==3) {
-                                                                                      //경험치 Up
-                                                                                      setState(() {
-                                                                                        user
-                                                                                            .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
-                                                                                            .update({'money': user_money + 200})
-                                                                                            .then((value) => print("User Updated"))
-                                                                                            .catchError((error) => print("Failed to update user: $error"));
-                                                                                      });
+                                                                                    if(quest_current["quest${idx+1}_clear"]==false){
+                                                                                      if (quest_current["quest${idx+1}"].toString() == 3.toString()) {
+                                                                                        setState(() {
+                                                                                          user
+                                                                                              .doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3')
+                                                                                              .update({
+                                                                                            'money': user_money + 200,
+                                                                                            "quest.quest${idx+1}_clear" : true,
+                                                                                          })
+                                                                                              .then((value) => print("User Updated"))
+                                                                                              .catchError((error) => print("Failed to update user: $error"));
+                                                                                          getUserInfo();
+                                                                                        });
+                                                                                      }
                                                                                     }
                                                                                     break;
                                                                                 }

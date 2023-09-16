@@ -179,6 +179,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
@@ -718,13 +719,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                           Container(
                                             child:
                                             ElevatedButton(
-                                              onPressed: (itemsCount.isNotEmpty && index >= 6 && index <= 11 && itemsCount[index])
+                                              onPressed: (itemsCount.isNotEmpty && index+6 >= 6 && index+6 <= 11 && itemsCount[index+6])
                                                   ? () {
+                                                print("yes");
                                                 // 버튼 클릭 시 실행할 코드
                                               }
-                                                  : null,
+                                                  :
+                                              (){
+                                                print(index);
+                                                print("no");
+                                              },
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: (itemsCount.isNotEmpty && index >= 6 && index <= 11 && itemsCount[index])
+                                                backgroundColor: (index+6 >= 6 && index+6 <= 11 && itemsCount[index+6]==true)
                                                     ? Color(0xFFFFCD4A)
                                                     : Colors.grey,
                                                 shape: RoundedRectangleBorder(

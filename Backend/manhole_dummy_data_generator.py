@@ -7,7 +7,7 @@ import googlemaps as gm
 latitude / longitude / address / photo / aging_count
 '''
 
-gmaps = gm.Client(key='AIzaSyAwaYLRQZq7r1rMSib6ShEbVwkWLnQm-NQ')
+gmaps = gm.Client(key='')
 
 df = pd.DataFrame(
     {'Latitude': ['36.6206095'], \

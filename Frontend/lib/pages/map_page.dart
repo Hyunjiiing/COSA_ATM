@@ -121,12 +121,67 @@ void getUserInfo() async {
 class _map_pageState extends State<map_page> {
   Completer<GoogleMapController> _controller = Completer();
   CollectionReference user = FirebaseFirestore.instance.collection('User');
-
+  bool isPopupOpen = false;
 
   @override
   void initState() {
-    getUserInfo();
-    _getPosition();
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getUserInfo();
+      _getPosition();
+      if (!isPopupOpen) {
+        _showPopup();
+      }
+    });
+  }
+
+  void _closePopup() {
+    setState(() {
+      isPopupOpen = false;
+    });
+  }
+
+  void _showPopup() {
+    setState(() {
+      isPopupOpen = true;
+    });
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          actionsPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.60,
+            child: Column(
+              children: [
+                Container(
+                    height: MediaQuery.of(context).size.height / 100 * 8,
+                    child: Center(child: Text("개선 사항", style: TextStyle(fontSize: 30, fontFamily: 'Bit',),))
+                ),
+                Container(
+                    width: MediaQuery.of(context).size.width * 0.70,
+                    height: MediaQuery.of(context).size.height * 0.09,
+                    child: Image.asset('assets/images/sledding.png')
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _closePopup();
+                Navigator.pop(context);
+              },
+              child: Text("확인", style: TextStyle(color: Color(0xffFFB156), fontFamily: "Bit", fontSize: 20)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

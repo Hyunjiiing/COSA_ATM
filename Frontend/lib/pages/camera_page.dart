@@ -300,20 +300,25 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                         contentPadding: EdgeInsets.zero,
                         content: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*0.60,
+                          height: MediaQuery.of(context).size.height*0.80,
                           child: Column(
                             children: [
                               Container(
-                                  height: MediaQuery.of(context).size.height/100*8,
-                                  child: Center(child: Text("맨홀 사진",style: TextStyle(fontSize: 30,fontFamily: 'Bit',),))
+                                  height: MediaQuery.of(context).size.height/100*7,
+                                  child: Center(child: Text("사진",style: TextStyle(fontSize: 30,fontFamily: 'Bit',),))
                               ),
                               Container(
                                   width: MediaQuery.of(context).size.width*0.70,
-                                  height: MediaQuery.of(context).size.height*0.35,
+                                  height: MediaQuery.of(context).size.height*0.09,
+                                  child: Image.asset('assets/images/sledding.png')
+                              ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width*0.65,
+                                  height: MediaQuery.of(context).size.height*0.30,
                                   child: Image.network(url)
                               ),
                               Container(
-                                  height: MediaQuery.of(context).size.height/100*8,
+                                  height: MediaQuery.of(context).size.height/100*5,
                                   child: Center(child: Text("${address}",style: TextStyle(fontSize: 15,fontFamily: 'Bit',),))
                               ),
                               Container(

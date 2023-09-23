@@ -10,12 +10,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SingleChildScrollView(child: Home()));
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(child: Home()));
   }
 }
-final List<bool> selectedImageIndexes = [false, false, false, false, false, false, false, false, false];
-final List<String> keys = [];
+List<bool> selectedImageIndexes = [false, false, false, false, false, false, false, false, false];
+List<String> keys = [];
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -59,9 +59,9 @@ class Home extends StatelessWidget {
                   child: Text(
                     "아래 사진들 중 노후화된\n'맨홀'을 모두 골라주세요",
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500, fontFamily: 'Bit',),
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500, fontFamily: 'Bit',),
                   ),
                 ),
                 Container(
@@ -73,28 +73,28 @@ class Home extends StatelessWidget {
           Container(
             height: 75,
           ),
-      SizedBox(
-        width: sizeX,
-        height: sizeY - 200,
-        child: FutureBuilder(
-          future: createGallery(9),
-          builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return GridView.count(
-                scrollDirection: Axis.vertical,
-                crossAxisCount: 3,
-                mainAxisSpacing: 5.0,
-                crossAxisSpacing: 5.0,
-                padding: const EdgeInsets.all(5),
-                children:snapshot.data!,
-              );
-            }
-          },
-        ),),
+          SizedBox(
+            width: sizeX,
+            height: sizeY - 200,
+            child: FutureBuilder(
+              future: createGallery(9),
+              builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return GridView.count(
+                    scrollDirection: Axis.vertical,
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 5.0,
+                    crossAxisSpacing: 5.0,
+                    padding: const EdgeInsets.all(5),
+                    children:snapshot.data!,
+                  );
+                }
+              },
+            ),),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -108,7 +108,7 @@ class Home extends StatelessWidget {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.circular(30), // Set borderRadius here
+                    BorderRadius.circular(30), // Set borderRadius here
                   ),
                 ),
                 child: const Padding(
@@ -125,10 +125,7 @@ class Home extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   // Handle the button press here
-                  // 후처리
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-
+                  // 후처
                   DocumentSnapshot userInfo = await user.doc('YlKcdF67V6WGeFUmNhcQFuv5NrE3').get();
                   Map<String, dynamic> data = userInfo.data()! as Map<String, dynamic>;
 
@@ -154,22 +151,38 @@ class Home extends StatelessWidget {
                       .catchError((error) => print("Failed to update user: $error"));
 
                   CollectionReference manhole = FirebaseFirestore.instance.collection('Manhole');
-                  for (int i = 0; i < 9; i++) {
+                  CollectionReference agingManhole = FirebaseFirestore.instance.collection('AgingManhole');
+                  print(selectedImageIndexes);
+                  for (int i = 0; i < keys.length; i++) {
                     DocumentSnapshot manholeInfo = await manhole.doc(keys[i]).get();
                     Map<String, dynamic> data = manholeInfo.data()! as Map<String, dynamic>;
                     if (selectedImageIndexes[i]) {
+                      selectedImageIndexes[i] = false;
+                      if (data['count'] + 1 >= 30) {
+                        agingManhole.doc(keys[i]).set({
+                          'key': data['key'],
+                          'url': data['url']
+                        });
+
+                        manhole.doc(keys[i]).delete();
+                      }
+                      else {
                         manhole
                             .doc(keys[i])
                             .update({'count': data['count'] + 1});
                       }
+                    }
                   }
+
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xffFFCD4A),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.circular(30), // Set borderRadius here
+                    BorderRadius.circular(30), // Set borderRadius here
                   ),
                 ),
                 child: const Padding(
@@ -189,16 +202,20 @@ class Home extends StatelessWidget {
 
   Future<List<Widget>> createGallery(int numImg) async {
     CollectionReference manhole = FirebaseFirestore.instance.collection('Manhole');
-    QuerySnapshot url = await manhole.limit(9).get();
+    QuerySnapshot querySnapshot = await manhole.get();
+    List<QueryDocumentSnapshot> docs = querySnapshot.docs;
+
+    docs.shuffle();
 
     List<Widget> images = [];
     List<String> urls = [];
+    keys = [];
 
-    url.docs.forEach((doc) {
-      var data = doc.data()! as Map<String, dynamic>;
+    for (var doc in docs) {
+      var data = doc.data() as Map<String, dynamic>;
       urls.add(data['url']);
       keys.add(data['key']);
-    });
+    }
 
     Widget image;
     int i = 0;
@@ -264,4 +281,4 @@ class _SelectableImageState extends State<SelectableImage> {
       ),
     );
   }
-  }
+}

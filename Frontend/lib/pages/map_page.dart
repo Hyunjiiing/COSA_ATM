@@ -121,100 +121,12 @@ void getUserInfo() async {
 class _map_pageState extends State<map_page> {
   Completer<GoogleMapController> _controller = Completer();
   CollectionReference user = FirebaseFirestore.instance.collection('User');
-  bool isPopupOpen = false;
+
 
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getUserInfo();
-      _getPosition();
-      if (!isPopupOpen) {
-        _showPopup();
-      }
-    });
-  }
-
-  void _closePopup() {
-    setState(() {
-      isPopupOpen = false;
-    });
-  }
-
-  void _showPopup() {
-    setState(() {
-      isPopupOpen = true;
-    });
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context){
-          return AlertDialog(
-            actions: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/100*40,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                        height: MediaQuery.of(context).size.height/100*5,
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Center(child: Text("개선상황",style: TextStyle(fontFamily: 'Bit',fontSize: 25),))
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                            height: MediaQuery.of(context).size.height/100*20,
-                            child: Column(
-                              children: [
-                                Container(
-                                    width: MediaQuery.of(context).size.width/100*30,
-                                    height: MediaQuery.of(context).size.height/100*15,
-                                    child: Image.asset("assets/images/before.jpg",fit: BoxFit.cover,)
-                                ),
-                                Text("Before",style: TextStyle(fontFamily: 'Bit',fontSize: 25,color: Colors.red),),
-                              ],
-                            )
-                        ),
-                        Container(
-                            height: MediaQuery.of(context).size.height/100*20,
-                            child: Column(
-                              children: [
-                                Container(
-                                    width: MediaQuery.of(context).size.width/100*30,
-                                    height: MediaQuery.of(context).size.height/100*15,
-                                    child: Image.asset("assets/images/after.jpg",fit: BoxFit.cover,)
-                                ),
-                                Text("After",style: TextStyle(fontFamily: 'Bit',fontSize: 25,color: Colors.green),)
-                              ],
-                            )
-                        ),
-                      ],
-                    ),
-                    Text("2023-09-22",style: TextStyle(fontFamily: 'Bit',fontSize: 20,color: Colors.black),),
-                    Container(
-                      height: MediaQuery.of(context).size.height/100*6,
-                      width: MediaQuery.of(context).size.width*0.3,
-                      child: MaterialButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          );
-        }
-    );
+    getUserInfo();
+    _getPosition();
   }
 
   @override

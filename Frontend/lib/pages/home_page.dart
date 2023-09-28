@@ -10,8 +10,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(child: Home()));
+            resizeToAvoidBottomInset: false,
+            body: SingleChildScrollView(child: Home()));
   }
 }
 List<bool> selectedImageIndexes = [false, false, false, false, false, false, false, false, false];
@@ -59,9 +59,9 @@ class Home extends StatelessWidget {
                   child: Text(
                     "아래 사진들 중 노후화된\n'맨홀'을 모두 골라주세요",
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500, fontFamily: 'Bit',),
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500, fontFamily: 'Bit',),
                   ),
                 ),
                 Container(
@@ -73,28 +73,28 @@ class Home extends StatelessWidget {
           Container(
             height: 75,
           ),
-          SizedBox(
-            width: sizeX,
-            height: sizeY - 200,
-            child: FutureBuilder(
-              future: createGallery(9),
-              builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return GridView.count(
-                    scrollDirection: Axis.vertical,
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 5.0,
-                    crossAxisSpacing: 5.0,
-                    padding: const EdgeInsets.all(5),
-                    children:snapshot.data!,
-                  );
-                }
-              },
-            ),),
+      SizedBox(
+        width: sizeX,
+        height: sizeY - 200,
+        child: FutureBuilder(
+          future: createGallery(9),
+          builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return GridView.count(
+                scrollDirection: Axis.vertical,
+                crossAxisCount: 3,
+                mainAxisSpacing: 5.0,
+                crossAxisSpacing: 5.0,
+                padding: const EdgeInsets.all(5),
+                children:snapshot.data!,
+              );
+            }
+          },
+        ),),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -108,7 +108,7 @@ class Home extends StatelessWidget {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius:
-                    BorderRadius.circular(30), // Set borderRadius here
+                        BorderRadius.circular(30), // Set borderRadius here
                   ),
                 ),
                 child: const Padding(
@@ -157,22 +157,22 @@ class Home extends StatelessWidget {
                     DocumentSnapshot manholeInfo = await manhole.doc(keys[i]).get();
                     Map<String, dynamic> data = manholeInfo.data()! as Map<String, dynamic>;
                     if (selectedImageIndexes[i]) {
-                      selectedImageIndexes[i] = false;
-                      if (data['count'] + 1 >= 30) {
-                        agingManhole.doc(keys[i]).set({
-                          'key': data['key'],
-                          'url': data['url']
-                        });
+                        selectedImageIndexes[i] = false;
+                        if (data['count'] + 1 >= 30) {
+                            agingManhole.doc(keys[i]).set({
+                              'key': data['key'],
+                              'url': data['url']
+                            });
 
-                        manhole.doc(keys[i]).delete();
-                      }
-                      else {
-                        manhole
-                            .doc(keys[i])
-                            .update({'count': data['count'] + 1});
-                      }
+                            manhole.doc(keys[i]).delete();
+                        }
+                        else {
+                            manhole
+                              .doc(keys[i])
+                              .update({'count': data['count'] + 1});
+                        }
                     }
-                  }
+                    }
 
                   Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
@@ -182,7 +182,7 @@ class Home extends StatelessWidget {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius:
-                    BorderRadius.circular(30), // Set borderRadius here
+                        BorderRadius.circular(30), // Set borderRadius here
                   ),
                 ),
                 child: const Padding(
@@ -281,4 +281,4 @@ class _SelectableImageState extends State<SelectableImage> {
       ),
     );
   }
-}
+  }

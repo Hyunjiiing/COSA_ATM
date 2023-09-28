@@ -9,6 +9,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PetPage extends StatelessWidget {
   final List<Marker> marker;
@@ -104,7 +106,6 @@ class _PetScreenState extends State<PetScreen> {
         print("1");
       }
     });*/
-
 
     return Scaffold(
       body: Stack(
@@ -529,9 +530,21 @@ class _PetScreenState extends State<PetScreen> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                sharePet(context);
-                              }, // 여기에 공유 기능
+                              onTap: () async {
+                                final imageAsset = "assets/images/share_image.png";
+                                final image = await rootBundle.load(imageAsset);
+                                final buffer = image.buffer;
+                                Share.shareXFiles([
+                                  XFile.fromData(buffer.asUint8List(
+                                    image.offsetInBytes,
+                                    image.lengthInBytes
+                                  ),
+                                    name: 'share_image',
+                                    mimeType: 'image/png',
+                                  ),
+                                ],
+                                subject: 'Share Image');
+                              },
                               child: Column(
                                 children: [
                                   Container(
@@ -543,8 +556,7 @@ class _PetScreenState extends State<PetScreen> {
                                   ),
                                   Text(
                                     '공유하기',
-                                    style: TextStyle(
-                                        fontSize: 18, fontFamily: 'Bit'),
+                                    style: TextStyle(fontSize: 18, fontFamily: 'Bit'),
                                   ),
                                 ],
                               ),

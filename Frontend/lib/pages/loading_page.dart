@@ -63,16 +63,11 @@ class _loading_pageState extends State<loading_page> {
                               ),
                               Container(
                                   width: MediaQuery.of(context).size.width*0.70,
-                                  height: MediaQuery.of(context).size.height*0.09,
-                                  child: Image.asset('assets/images/sledding.png')
-                              ),
-                              Container(
-                                  width: MediaQuery.of(context).size.width*0.65,
-                                  height: MediaQuery.of(context).size.height*0.30,
+                                  height: MediaQuery.of(context).size.height*0.35,
                                   child: Image.network(url,fit: BoxFit.cover,)
                               ),
                               Container(
-                                  height: MediaQuery.of(context).size.height/100*5,
+                                  height: MediaQuery.of(context).size.height/100*8,
                                   child: Center(child: Text("${address}",style: TextStyle(fontSize: 15,fontFamily: 'Bit',),))
                               ),
                               Container(

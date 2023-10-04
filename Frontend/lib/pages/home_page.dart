@@ -140,8 +140,8 @@ class Home extends StatelessWidget {
                   if (isToday(quest["date"])) {
                     quest['quest1'] = quest['quest2'] = quest['quest3'] = 0;
                   }
-                  if(quest['quest1']<3){
-                    quest['quest1'] += 1;
+                  if(quest['quest2']<3){
+                    quest['quest2'] += 1;
                   }
 
                   user

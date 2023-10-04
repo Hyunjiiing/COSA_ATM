@@ -59,6 +59,7 @@ dependencies:
   image_picker: ^1.0.4
   share: ^2.0.4
   share_plus: ^7.1.0
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:

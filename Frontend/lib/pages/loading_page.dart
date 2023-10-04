@@ -23,7 +23,6 @@ Future<void> _getPosition() async{
   current_longitude = position.longitude;
 }
 
-
 class _loading_pageState extends State<loading_page> {
   List<Marker> marker=[];
 

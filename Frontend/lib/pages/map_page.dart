@@ -13,11 +13,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:camera/camera.dart';
 
-import 'home_page.dart';
-
 List<String> quest =[
-  "검토하기 3회",
   "맨홀찍기 3회",
+  "검토하기 3회",
   "공유하기 1회",
   "모든 퀘스트 성공",
 ];
@@ -42,6 +40,24 @@ List<String> quest_name =[
   "quest3",
   "quest4",
 ];
+
+List<String> lanking_name =[
+  "leedongyull",
+  "mondayy1",
+  "KangJiUng",
+  "Hyunjiiing",
+  "kjh3291",
+];
+
+List<String> lanking_Score =[
+  "32",
+  "26",
+  "20",
+  "17",
+  "3",
+];
+
+
 
 Map<dynamic,String> mainCharacter = {
   "character1":"assets/images/character1.png",
@@ -215,7 +231,7 @@ class _map_pageState extends State<map_page> {
                             child: Column(
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width/100*59,
+                                  width: MediaQuery.of(context).size.width/100*65,
                                   margin: EdgeInsets.only(top: 20),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,16 +259,21 @@ class _map_pageState extends State<map_page> {
                                                       color: Colors.grey[300]
                                                   ),
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                     children: [
-                                                      Text("${index+1}",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20)),
-                                                      Row(
-                                                        children: [
-                                                          Icon(Icons.cruelty_free),
-                                                          Text("닉네임"),
-                                                        ],
+                                                      Container(
+                                                        margin:EdgeInsets.only(left: 20,right: 10),
+                                                          width: MediaQuery.of(context).size.width/100*5,
+                                                          child: Text("${index+1}",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20))
                                                       ),
-                                                      Text("점수")
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width/100*10,
+                                                        height: MediaQuery.of(context).size.height/100*5,
+                                                        child: Image.asset("${mainCharacter["character${index+1}"]}",fit: BoxFit.cover,),
+                                                      ),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*2,),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*20,child: Center(child: Text("${lanking_name[index]}"))),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*14,),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*5,child: Center(child: Text("${lanking_Score[index]}")))
                                                     ],
                                                   ),
                                                 )
@@ -264,16 +285,21 @@ class _map_pageState extends State<map_page> {
                                                       color: Colors.white
                                                   ),
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                     children: [
-                                                      Text("${index+1}",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20)),
-                                                      Row(
-                                                        children: [
-                                                          Icon(Icons.cruelty_free),
-                                                          Text("닉네임"),
-                                                        ],
+                                                      Container(
+                                                          margin:EdgeInsets.only(left: 20,right: 10),
+                                                          width: MediaQuery.of(context).size.width/100*5,
+                                                          child: Text("${index+1}",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20))
                                                       ),
-                                                      Text("점수")
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width/100*10,
+                                                        height: MediaQuery.of(context).size.height/100*5,
+                                                        child: Image.asset("${mainCharacter["character${index+1}"]}",fit: BoxFit.cover,),
+                                                      ),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*2,),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*20,child: Center(child: Text("${lanking_name[index]}"))),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*14,),
+                                                      SizedBox(width: MediaQuery.of(context).size.width/100*5,child: Center(child: Text("${lanking_Score[index]}")))
                                                     ],
                                                   ),
                                                 );
@@ -282,26 +308,31 @@ class _map_pageState extends State<map_page> {
                                         ),
                                         Icon(Icons.more_vert,size: 70,color: Colors.grey[300],),
                                         Container(
-                                          width: MediaQuery.of(context).size.width/100*70,
+                                          width: MediaQuery.of(context).size.width/100*68,
                                           height: MediaQuery.of(context).size.height/100*6,
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(10),
                                               color: Colors.grey[300]
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
-                                              Text("75",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20),),
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.cruelty_free),
-                                                  Text("닉네임"),
-                                                ],
+                                              Container(
+                                                  margin:EdgeInsets.only(left: 20,right: 10),
+                                                  width: MediaQuery.of(context).size.width/100*5,
+                                                  child: Text("1",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20))
                                               ),
-                                              Text("점수")
+                                              Container(
+                                                width: MediaQuery.of(context).size.width/100*10,
+                                                height: MediaQuery.of(context).size.height/100*5,
+                                                child: Image.asset("${mainCharacter["character1"]}",fit: BoxFit.cover,),
+                                              ),
+                                              SizedBox(width: MediaQuery.of(context).size.width/100*2,),
+                                              SizedBox(width: MediaQuery.of(context).size.width/100*20,child: Center(child: Text("${lanking_name[0]}"))),
+                                              SizedBox(width: MediaQuery.of(context).size.width/100*14,),
+                                              Text("${lanking_Score[0]}")
                                             ],
                                           ),
-                                        ),
+                                        )
                                       ],
                                     )
                                 ),
@@ -877,7 +908,7 @@ class _map_pageState extends State<map_page> {
         CameraUpdate.newCameraPosition(
             CameraPosition(
                 target: LatLng(current_latitude,current_longitude),
-              zoom: 15
+              zoom: 20
             )
         )
     );

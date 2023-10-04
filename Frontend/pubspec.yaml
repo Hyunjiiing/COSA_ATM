@@ -56,6 +56,8 @@ dependencies:
   intl: ^0.18.1
   provider: ^6.0.5
   cloud_firestore: ^4.9.1
+  dotted_border: ^2.0.0+3
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:

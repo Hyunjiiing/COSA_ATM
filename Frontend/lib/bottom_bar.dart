@@ -1,9 +1,8 @@
 import 'package:cosa_atm/pages/camera_page.dart';
+import 'package:cosa_atm/pages/community_page.dart';
 import 'package:cosa_atm/pages/map_page.dart';
 import 'package:cosa_atm/pages/pet_page.dart';
-import 'package:cosa_atm/pages/setting_page.dart';
 import 'package:cosa_atm/pages/shop_page.dart';
-import 'package:cosa_atm/pages/store_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -162,7 +161,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: currentTap == 2
+                          color: currentTap == 3
                               ? Colors.yellow
                               : Colors.transparent,
                           shape: BoxShape.circle,
@@ -189,11 +188,11 @@ class _MapBottomBarState extends State<MapBottomBar> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          currentTap = 3;
+                          currentTap = 4;
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SettingPage(marker: widget.marker,)));
+                                  builder: (context) => community_page(marker: widget.marker,)));
                         });
                       },
                       child: Column(
@@ -205,7 +204,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                             height: 50,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: currentTap == 3
+                              color: currentTap == 4
                                   ? Colors.yellow
                                   : Colors.transparent,
                             ),
@@ -217,7 +216,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                                   color: currentTap==4 ? Colors.black : Colors.grey,
                                 ),
                                 Text(
-                                  '내 정보',
+                                  '커뮤니티',
                                   style: TextStyle(color: currentTap==4 ? Colors.black : Colors.grey,
                                     fontFamily: 'Bit',
                                   ),
@@ -432,7 +431,7 @@ class _BottomBarState extends State<BottomBar> {
                   currentTap=4;
                   Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=>SettingPage(marker: widget.marker,))
+                          MaterialPageRoute(builder: (context)=>community_page(marker: widget.marker,))
                       );
                 });
               },
@@ -454,7 +453,7 @@ class _BottomBarState extends State<BottomBar> {
                           color: currentTap==4 ? Colors.black : Colors.grey,
                         ),
                         Text(
-                          '내 정보',
+                          '커뮤니티',
                           style: TextStyle(color: currentTap==4 ? Colors.black : Colors.grey,
                             fontFamily: 'Bit',
                           ),

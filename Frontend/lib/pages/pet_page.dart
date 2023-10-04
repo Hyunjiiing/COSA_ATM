@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/inventory_page.dart';
 import 'package:cosa_atm/pages/map_page.dart';
+import 'package:cosa_atm/pages/share_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -530,7 +531,10 @@ class _PetScreenState extends State<PetScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                sharePet(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context)=>share_page())
+                                );
                               }, // 여기에 공유 기능
                               child: Column(
                                 children: [

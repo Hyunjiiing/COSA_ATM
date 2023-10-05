@@ -165,41 +165,74 @@ class _map_pageState extends State<map_page> {
       isPopupOpen = true;
     });
     showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          actionsPadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.60,
-            child: Column(
-              children: [
-                Container(
-                    height: MediaQuery.of(context).size.height / 100 * 8,
-                    child: Center(child: Text("개선 사항", style: TextStyle(fontSize: 30, fontFamily: 'Bit',),))
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context){
+          return AlertDialog(
+            actions: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height/100*40,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)
                 ),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    height: MediaQuery.of(context).size.height * 0.09,
-                    child: Image.asset('assets/images/sledding.png')
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        height: MediaQuery.of(context).size.height/100*5,
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Center(child: Text("개선상황",style: TextStyle(fontFamily: 'Bit',fontSize: 25),))
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                            height: MediaQuery.of(context).size.height/100*20,
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: MediaQuery.of(context).size.width/100*30,
+                                    height: MediaQuery.of(context).size.height/100*15,
+                                    child: Image.asset("assets/images/before.jpg",fit: BoxFit.cover,)
+                                ),
+                                Text("Before",style: TextStyle(fontFamily: 'Bit',fontSize: 25,color: Colors.red),),
+                              ],
+                            )
+                        ),
+                        Container(
+                            height: MediaQuery.of(context).size.height/100*20,
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: MediaQuery.of(context).size.width/100*30,
+                                    height: MediaQuery.of(context).size.height/100*15,
+                                    child: Image.asset("assets/images/after.jpg",fit: BoxFit.cover,)
+                                ),
+                                Text("After",style: TextStyle(fontFamily: 'Bit',fontSize: 25,color: Colors.green),)
+                              ],
+                            )
+                        ),
+                      ],
+                    ),
+                    Text("2023-09-22",style: TextStyle(fontFamily: 'Bit',fontSize: 20,color: Colors.black),),
+                    Container(
+                      height: MediaQuery.of(context).size.height/100*6,
+                      width: MediaQuery.of(context).size.width*0.3,
+                      child: MaterialButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                _closePopup();
-                Navigator.pop(context);
-              },
-              child: Text("확인", style: TextStyle(color: Color(0xffFFB156), fontFamily: "Bit", fontSize: 20)),
-            ),
-          ],
-        );
-      },
+              )
+            ],
+          );
+        }
     );
   }
 
@@ -830,7 +863,11 @@ class _map_pageState extends State<map_page> {
                           height: MediaQuery.of(context).size.height/100*10,
                           child: Column(
                             children: [
-                              Image.asset("${mainCharacter[user_mainCharacter?[0]["key"]]}",fit: BoxFit.contain,),
+                              Container(
+                                  width: MediaQuery.of(context).size.width/100*13.4,
+                                  height: MediaQuery.of(context).size.height/100*6.7,
+                                  child: Image.asset("${mainCharacter[user_mainCharacter?[0]["key"]]}",fit: BoxFit.cover,)
+                              ),
                               SizedBox(
                                 height: MediaQuery.of(context).size.height/100*0.5,
                               ),

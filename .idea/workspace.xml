@@ -10,22 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dcd1426-2494-4da8-a969-0d8387652a92" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/assets/images/character1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/assets/images/character1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/assets/images/inven_cat.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/assets/images/inven_cat.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/assets/images/share_image.png" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/assets/images/share_image.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/lib/bottom_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/bottom_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/community_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/community_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/inventory_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/inventory_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/camera_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/camera_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/loading_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/loading_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/map_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/map_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/pet_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/pet_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

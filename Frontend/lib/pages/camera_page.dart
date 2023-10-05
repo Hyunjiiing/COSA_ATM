@@ -304,25 +304,30 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                           child: Column(
                             children: [
                               Container(
-                                  height: MediaQuery.of(context).size.height/100*8,
-                                  child: Center(child: Text("맨홀 사진",style: TextStyle(fontSize: 30,fontFamily: 'Bit',),))
+                                  height: MediaQuery.of(context).size.height/100*7,
+                                  child: Center(child: Text("사진",style: TextStyle(fontSize: 30,fontFamily: 'Bit',),))
                               ),
                               Container(
                                   width: MediaQuery.of(context).size.width*0.70,
-                                  height: MediaQuery.of(context).size.height*0.35,
+                                  height: MediaQuery.of(context).size.height*0.09,
+                                  child: Image.asset('assets/images/sledding.png')
+                              ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width*0.65,
+                                  height: MediaQuery.of(context).size.height*0.30,
                                   child: Image.network(url)
                               ),
                               Container(
-                                  height: MediaQuery.of(context).size.height/100*8,
+                                  height: MediaQuery.of(context).size.height/100*5,
                                   child: Center(child: Text("${address}",style: TextStyle(fontSize: 15,fontFamily: 'Bit',),))
                               ),
                               Container(
                                 height: MediaQuery.of(context).size.height*0.08,
                                 width: MediaQuery.of(context).size.width*0.4,
                                 child: MaterialButton(
-                                    onPressed: (){
-                                      Navigator.pop(context);
-                                    },
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  },
                                   child: Center(child: Text("확인",style: TextStyle(fontFamily: "Bit",fontSize: 20),)),
                                 ),
                               )

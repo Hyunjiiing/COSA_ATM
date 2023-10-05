@@ -71,7 +71,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: currentTap == 0
-                                  ? Colors.yellow
+                                  ? Color(0xFFFFCD4A)
                                   : Colors.transparent,
                             ),
                             child: Column(
@@ -115,7 +115,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                         height: 50,
                         decoration: BoxDecoration(
                           color: currentTap == 1
-                              ? Colors.yellow
+                              ? Color(0xFFFFCD4A)
                               : Colors.transparent,
                           shape: BoxShape.circle,
                         ),
@@ -162,7 +162,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                         height: 50,
                         decoration: BoxDecoration(
                           color: currentTap == 3
-                              ? Colors.yellow
+                              ? Color(0xFFFFCD4A)
                               : Colors.transparent,
                           shape: BoxShape.circle,
                         ),
@@ -205,7 +205,7 @@ class _MapBottomBarState extends State<MapBottomBar> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: currentTap == 4
-                                  ? Colors.yellow
+                                  ? Color(0xFFFFCD4A)
                                   : Colors.transparent,
                             ),
                             child: Column(

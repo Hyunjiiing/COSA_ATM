@@ -1,4 +1,5 @@
 import 'package:cosa_atm/bottom_bar.dart';
+import 'package:cosa_atm/pages/pet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -42,7 +43,9 @@ class InventoryScreen extends StatefulWidget {
 
 class _InventoryScreenState extends State<InventoryScreen> {
 
-  _login() async {
+  int cat_state=0;
+
+  /*_login() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: "mim@naver.com",
@@ -66,12 +69,12 @@ class _InventoryScreenState extends State<InventoryScreen> {
         ),
       );
     }
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
-    _login();
+    //_login();
     getUserData();
   }
 
@@ -160,20 +163,20 @@ class _InventoryScreenState extends State<InventoryScreen> {
   ];
 
   final List<String> wearingImagePaths = [
-    'images/character1.png',
-    'images/character2.png',
-    'images/character3.png',
-    'images/character4.png',
-    'images/character5.png',
-    'images/character6.png',
+    'assets/images/wearing_hat.png',
+    'assets/images/wearing_suit.png',
+    'assets/images/wearing_pinkglasses.png',
+    'assets/images/wearing_bigglasses.png',
+    'assets/images/wearing_blackglasses.png',
+    'assets/images/wearing_santa.png',
   ];
 
   final List<String> wearingNames = [
-    '검정 선글라스',
+    '안전모',
     '파란 정장',
     '핑크 선글라스',
     '알이 큰 선글라스',
-    '안전모',
+    '검정선글라스',
     '크리스마스 모자'
   ];
 
@@ -200,10 +203,20 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       ),
                     ),
                     Container(
+                      width: 200,
+                      height: 200,
                       child: Image(
-                        image: AssetImage('assets/images/inven_cat.gif'),
-                        width: 200,
-                        height: 200,
+                        image:
+                        cat_state==0
+                            ?
+                        AssetImage('assets/images/inven_cat.gif')
+                            :
+                        cat_state==1
+                            ?
+                        AssetImage("assets/images/inven_cat_hat.gif")
+                            :
+                        AssetImage("assets/images/inven_cat_suit.gif"),
+                        fit: BoxFit.cover,
                       ),
                     ),
                     Text(
@@ -440,7 +453,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                                     8),
                                               ),
                                               child: Text(
-                                                (itemsCount != null && index >= 0 && index < 6)
+                                                (itemsCount != null)
                                                     ? '${itemsCount[index]} 개'
                                                     : '',
                                                 style: TextStyle(
@@ -721,13 +734,21 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                               ElevatedButton(
                                                 onPressed: (itemsCount.isNotEmpty && index+6 >= 6 && index+6 <= 11 && itemsCount[index+6])
                                                     ? () {
-                                                  print("yes");
+                                                  if(index+6==6){
+                                                    setState(() {
+                                                      cat_state=1;
+                                                    });
+                                                  }
+                                                  else if(index+6==7){
+                                                    setState(() {
+                                                      cat_state=2;
+                                                      enter_inven=true;
+                                                    });
+                                                  }
                                                   // 버튼 클릭 시 실행할 코드
                                                 }
                                                     :
                                                     (){
-                                                  print(index);
-                                                  print("no");
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor: (index+6 >= 6 && index+6 <= 11 && itemsCount[index+6]==true)

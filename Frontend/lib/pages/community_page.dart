@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/upload_page.dart';

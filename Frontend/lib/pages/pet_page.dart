@@ -72,6 +72,7 @@ void getUserInfo() async {
   print("end");
 }
 
+bool enter_inven = false;
 
 class _PetScreenState extends State<PetScreen> {
 
@@ -299,14 +300,16 @@ class _PetScreenState extends State<PetScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            GestureDetector(
-                              onTap: () => {
+                            MaterialButton(
+                              onPressed: () => {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => InventoryPage(
                                           marker: widget.marker,
-                                        )))
+                                        )
+                                    )
+                                ),
                               },
                               child: Column(
                                 children: [
@@ -573,7 +576,7 @@ class _PetScreenState extends State<PetScreen> {
               left: 0,
               right: 0,
               child: Image.asset(
-                'assets/images/character1.png',
+                enter_inven==false ? 'assets/images/character1.png' :'assets/images/character_final.png',
                 height: 200,
                 width: 200,
               ),

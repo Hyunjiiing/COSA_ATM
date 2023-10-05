@@ -3,14 +3,11 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cosa_atm/bottom_bar.dart';
 import 'package:cosa_atm/pages/map_page.dart';
-import 'package:custom_info_window/custom_info_window.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class camera_page extends StatefulWidget {
@@ -27,9 +24,149 @@ class camera_page extends StatefulWidget {
   State<camera_page> createState() => _camera_pageState();
 }
 
+var dio = Dio();
+FirebaseFirestore _firestore = FirebaseFirestore.instance;
+FirebaseStorage storage=FirebaseStorage.instance;
+
 class _camera_pageState extends State<camera_page> {
+  final List<Marker> marker=[];
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+
+
+  /*void _callAPI() async {
+    var photo_url = 'https://img.hankyung.com/photo/202106/01.26706647.1.jpg';
+    var local_url = 'http://203.255.81.70:8024/user_photo/';
+    var url = local_url + photo_url;
+    var response = await dio.get(url);
+    Map<String, dynamic> responseMap = response.data;
+    var result = responseMap["result"];
+    print(result);
+  }*/
+
+  void _callAPI(String urlpath) async {
+    final firebaseStorageRef = storage.ref().child('test').child('test.jpg');
+    final uploadTask = firebaseStorageRef.putFile(
+        File(urlpath)
+    );
+    await uploadTask.whenComplete(() => null);
+    var photo_url = await firebaseStorageRef.getDownloadURL();
+    print(photo_url);
+    var local_url = 'http://203.255.81.70:8024/user_photo/';
+    var url = local_url;
+    var response = await dio.post(url,data: {'url':photo_url});
+    Map<String, dynamic> responseMap = response.data;
+    var result = responseMap["result"];
+    print(result);
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return result==1 ?
+          AlertDialog(
+            actions: [
+              Container(
+                width: MediaQuery.of(context).size.width/100*70,
+                height: MediaQuery.of(context).size.height/100*20,
+                child: Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height/100*13,
+                      child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.check_circle,color: Colors.green,size: 45,),
+                              SizedBox(height: MediaQuery.of(context).size.height/100*1,),
+                              Text("맨홀이 맞습니다.",style: TextStyle(fontFamily: 'Bit',fontSize: 25),),
+                            ],
+                          )
+                      ),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height/100*7,
+                      child: Center(
+                        child: MaterialButton(
+                          onPressed:(){
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width/100*30,
+                            height: MediaQuery.of(context).size.height/100*5,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black,width: 1),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Center(
+                              child: Text("확인",style: TextStyle(fontFamily: 'Bit',fontSize: 20),),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          )
+              :
+          AlertDialog(
+            actions: [
+              Container(
+                width: MediaQuery.of(context).size.width/100*70,
+                height: MediaQuery.of(context).size.height/100*20,
+                child: Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height/100*13,
+                      child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.error,color: Colors.red,size: 45,),
+                              Text("맨홀이 아닙니다.",style: TextStyle(fontFamily: 'Bit',fontSize: 25),),
+                              Text("다시 촬영해 주세요",style: TextStyle(fontFamily: 'Bit',fontSize: 25),),
+                            ],
+                          )
+                      ),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height/100*7,
+                      child: Center(
+                        child: MaterialButton(
+                          onPressed:()async{
+                            final cameras = await availableCameras();
+                                            final firstCamera = cameras.first;
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) => camera_page(
+                                                  camera: firstCamera,
+                                                  marker: marker,
+                                                ),
+                                              ),
+                                            );
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width/100*30,
+                            height: MediaQuery.of(context).size.height/100*5,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black,width: 1),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Center(
+                              child: Text("다시찍기",style: TextStyle(fontFamily: 'Bit',fontSize: 20),),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          );
+        }
+    );
+  }
 
   @override
   void initState() {
@@ -42,7 +179,6 @@ class _camera_pageState extends State<camera_page> {
       // Define the resolution to use.
       ResolutionPreset.medium,
     );
-
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
   }
@@ -120,6 +256,7 @@ class _camera_pageState extends State<camera_page> {
       floatingActionButton: FloatingActionButton.large(
           onPressed: () async {
             _controller.takePicture().then((image) {
+              _callAPI(image.path);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => DisplayPictureScreen(
@@ -244,8 +381,6 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
   Widget build(BuildContext context) {
     CollectionReference user = FirebaseFirestore.instance.collection('User');
 
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    FirebaseStorage storage=FirebaseStorage.instance;
     String url="";
 
     void getUserInfo() async {

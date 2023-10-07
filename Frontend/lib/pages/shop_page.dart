@@ -153,7 +153,7 @@ class _shop_pageState extends State<shop_page> {
                               Container(
                                 margin: EdgeInsets.only(top: 10,bottom: 10),
                                 width: MediaQuery.of(context).size.width/100*40,
-                                height: MediaQuery.of(context).size.height/100*20,
+                                height: MediaQuery.of(context).size.height/100*21,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.grey[300],
@@ -191,8 +191,8 @@ class _shop_pageState extends State<shop_page> {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width/100*18,
-                                          height: MediaQuery.of(context).size.height/100*3.5,
+                                          width: MediaQuery.of(context).size.width/100*18.5,
+                                          height: MediaQuery.of(context).size.height/100*3.2,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.grey[400],
@@ -200,13 +200,14 @@ class _shop_pageState extends State<shop_page> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text(shop_price[idx],style: TextStyle(fontFamily: 'Bit',fontSize: 16),),
-                                              Icon(Icons.monetization_on,color: Colors.yellow,)
+                                              Text(shop_price[idx],style: TextStyle(fontFamily: 'Bit',fontSize: 15),),
+                                              Icon(Icons.monetization_on,color: Colors.yellow,size: 20,)
                                             ],
                                           ),
                                         ),
                                         MaterialButton(
                                           padding: EdgeInsets.zero,
+                                          minWidth:MediaQuery.of(context).size.width/100*18,
                                           onPressed: (){},
                                           child: Container(
                                             width: MediaQuery.of(context).size.width/100*18,
@@ -234,7 +235,7 @@ class _shop_pageState extends State<shop_page> {
                               Container(
                                 margin: EdgeInsets.only(top: 10,bottom: 10),
                                 width: MediaQuery.of(context).size.width/100*40,
-                                height: MediaQuery.of(context).size.height/100*20,
+                                height: MediaQuery.of(context).size.height/100*21,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.grey[300],
@@ -272,6 +273,7 @@ class _shop_pageState extends State<shop_page> {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
+                                          margin: EdgeInsets.only(left:5),
                                           padding: EdgeInsets.zero,
                                           width: MediaQuery.of(context).size.width/100*18,
                                           height: MediaQuery.of(context).size.height/100*3.5,
@@ -282,13 +284,14 @@ class _shop_pageState extends State<shop_page> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Text(shop_price[idx+1],style: TextStyle(fontSize: 16,fontFamily: 'Bit',),),
-                                              Icon(Icons.monetization_on,color: Colors.yellow,)
+                                              Text(shop_price[idx+1],style: TextStyle(fontSize: 15,fontFamily: 'Bit',),),
+                                              Icon(Icons.monetization_on,color: Colors.yellow,size: 20,)
                                             ],
                                           ),
                                         ),
                                         MaterialButton(
                                           padding: EdgeInsets.zero,
+                                          minWidth: MediaQuery.of(context).size.width/100*18,
                                           onPressed: (){},
                                           child: Container(
                                             width: MediaQuery.of(context).size.width/100*18,

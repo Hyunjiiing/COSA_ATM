@@ -79,13 +79,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
   }
 
   void getUserData() {
-    getCurrentUserUID();
     getitemsList();
     getcatsList();
-  }
-
-  void getCurrentUserUID() {
-    currentUserUID = auth.currentUser!.uid;
   }
 
   void getitemsList() async {
@@ -263,7 +258,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                     : Color(0xFFFDE4A2),
                               ),
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 9),
+                                  horizontal: 22.8, vertical: 9),
                               child: Row(
                                 children: [
                                   Text(
@@ -302,7 +297,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                     : Color(0xFFFDE4A2),
                               ),
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 9),
+                                  horizontal: 22.8, vertical: 9),
                               child: Row(
                                 children: [
                                   Text(
@@ -341,7 +336,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                     : Color(0xFFFDE4A2),
                               ),
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 9),
+                                  horizontal: 22.8, vertical: 9),
                               child: Row(
                                 children: [
                                   Text(

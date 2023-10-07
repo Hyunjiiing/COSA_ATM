@@ -12,9 +12,13 @@
     <list default="true" id="9dcd1426-2494-4da8-a969-0d8387652a92" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/camera_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/camera_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/community_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/community_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/inventory_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/inventory_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/lib/pages/shop_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/lib/pages/shop_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/pubspec.yaml" afterDir="false" />
     </list>

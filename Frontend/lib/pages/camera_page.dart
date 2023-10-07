@@ -34,16 +34,6 @@ class _camera_pageState extends State<camera_page> {
   late Future<void> _initializeControllerFuture;
 
 
-  /*void _callAPI() async {
-    var photo_url = 'https://img.hankyung.com/photo/202106/01.26706647.1.jpg';
-    var local_url = 'http://203.255.81.70:8024/user_photo/';
-    var url = local_url + photo_url;
-    var response = await dio.get(url);
-    Map<String, dynamic> responseMap = response.data;
-    var result = responseMap["result"];
-    print(result);
-  }*/
-
   void _callAPI(String urlpath) async {
     final firebaseStorageRef = storage.ref().child('test').child('test.jpg');
     final uploadTask = firebaseStorageRef.putFile(
@@ -113,11 +103,11 @@ class _camera_pageState extends State<camera_page> {
             actions: [
               Container(
                 width: MediaQuery.of(context).size.width/100*70,
-                height: MediaQuery.of(context).size.height/100*20,
+                height: MediaQuery.of(context).size.height/100*22,
                 child: Column(
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height/100*13,
+                      height: MediaQuery.of(context).size.height/100*14,
                       child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -167,27 +157,36 @@ class _camera_pageState extends State<camera_page> {
         }
     );
   }
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // App state changed before we got the chance to initialize.
+    if (_controller == null || !_controller!.value.isInitialized) {
+      return;
+    }
+    if (state == AppLifecycleState.inactive) {
+      _controller?.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      if (_controller != null) {
+        print('muere');
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     // To display the current output from the Camera,
     // create a CameraController.
-    _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      widget.camera,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
-    // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _controller.initialize();
-  }
-
-  @override
-  void dispose() {
-    // Dispose of the controller when the widget is disposed.
-    _controller.dispose();
-    super.dispose();
+    setState(() {
+      _controller = CameraController(
+        // Get a specific camera from the list of available cameras.
+        widget.camera,
+        // Define the resolution to use.
+        ResolutionPreset.medium,
+      );
+      // Next, initialize the controller. This returns a Future.
+      _initializeControllerFuture = _controller.initialize();
+    });
+    didChangeAppLifecycleState(AppLifecycleState.detached);
   }
 
   @override
@@ -291,6 +290,7 @@ class _camera_pageState extends State<camera_page> {
     );
   }
 }
+
 /*class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
 

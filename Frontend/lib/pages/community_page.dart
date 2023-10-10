@@ -20,15 +20,21 @@ class community_page extends StatefulWidget {
 
 List<String> improve_title=[
   "가로등 파손 교체 요청",
-  "표지판 교체 요청"
+  "표지판 교체 요청",
+  "도로 파손 교체 요청",
+  "노후 맨홀 교체 요청"
 ];
 
 List<String> improve_before=[
   "assets/images/before.jpg",
   "assets/images/before2.png",
+  "assets/images/before3.png",
+  "assets/images/before4.jpg",
 ];
 
 List<String> improve_after=[
+  "assets/images/after.jpg",
+  "assets/images/after2.png",
   "assets/images/after.jpg",
   "assets/images/after2.png",
 ];
@@ -36,11 +42,15 @@ List<String> improve_after=[
 List<String> improve_time=[
   "2023-09-22",
   "2023-08-13",
+  "2023-08-02",
+  "2023-07-28",
 ];
 
 List<String> improve_adress=[
   "충청북도 청주시 서원구 충대로 1",
   "충청북도 청주시 서원구 개신동 3-16",
+  "충청북도 청주시 서원구 예체로7번길 45",
+  "충청북도 청주시 서원구 1순환로709번길 44",
 ];
 
 class _community_pageState extends State<community_page> {
@@ -210,7 +220,7 @@ class _community_pageState extends State<community_page> {
                       height: MediaQuery.of(context).size.height/100*75,
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
-                        itemCount: 2,
+                        itemCount: 4,
                         itemBuilder: (BuildContext ctx, int idx) {
                           return MaterialButton(
                             padding: EdgeInsets.zero,

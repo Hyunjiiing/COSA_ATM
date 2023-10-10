@@ -224,7 +224,7 @@ class _camera_pageState extends State<camera_page> {
                   alignment: Alignment.topCenter,
                   child: Container(
                       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/100*8),
-                      child: Text("원의 크기에 맞춰서\n맨홀을 촬영해 주세요",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 25),textAlign: TextAlign.center,)
+                      child: Text("원의 크기에 맞춰서\n맨홀을 촬영해 주세요",style: TextStyle(color: Colors.white,fontSize: 25),textAlign: TextAlign.center,)
                   ),
                 ),
                 Align(

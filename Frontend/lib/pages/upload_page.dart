@@ -140,6 +140,10 @@ class _upload_pageState extends State<upload_page> {
                                 focusNode: titletextFocus,
                                 controller: TitleController,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                      borderSide: BorderSide(color: Color(0xFFFFCD4A),)
+                                  ),
                                   labelText: '제목',
                                   hintText: '제목을 입력해주세요',
                                   labelStyle: TextStyle(color: Colors.black),
@@ -178,6 +182,10 @@ class _upload_pageState extends State<upload_page> {
                                 expands: true,
                                 controller: DescriptionController,
                                 decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                      borderSide: BorderSide(color: Color(0xFFFFCD4A),)
+                                  ),
                                   labelText: '내용',
                                   hintText: '내용을 입력해주세요',
                                   labelStyle: TextStyle(color: Colors.black),
